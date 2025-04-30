@@ -15,8 +15,8 @@ namespace WindowsFormsApp1
         static void Main()
         {
             Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new datagridview());
+            Application.SetCompatibleTextRenderingDefault(true);
+            Application.Run(new dashboard());
         }
     }
 }
