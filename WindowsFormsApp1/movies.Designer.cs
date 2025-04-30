@@ -35,27 +35,27 @@
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
             this.label11 = new System.Windows.Forms.Label();
-            this.maskedTextBox4 = new System.Windows.Forms.MaskedTextBox();
+            this.year = new System.Windows.Forms.MaskedTextBox();
             this.tableLayoutPanel9 = new System.Windows.Forms.TableLayoutPanel();
             this.label10 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.category = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
             this.label9 = new System.Windows.Forms.Label();
-            this.maskedTextBox3 = new System.Windows.Forms.MaskedTextBox();
+            this.duration = new System.Windows.Forms.MaskedTextBox();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.label8 = new System.Windows.Forms.Label();
-            this.maskedTextBox2 = new System.Windows.Forms.MaskedTextBox();
+            this.rating = new System.Windows.Forms.MaskedTextBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.name = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.tableLayoutPanel13 = new System.Windows.Forms.TableLayoutPanel();
             this.label14 = new System.Windows.Forms.Label();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.cast = new System.Windows.Forms.RichTextBox();
             this.tableLayoutPanel12 = new System.Windows.Forms.TableLayoutPanel();
             this.label13 = new System.Windows.Forms.Label();
-            this.maskedTextBox5 = new System.Windows.Forms.MaskedTextBox();
+            this.min_age = new System.Windows.Forms.MaskedTextBox();
             this.tableLayoutPanel11 = new System.Windows.Forms.TableLayoutPanel();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.language = new System.Windows.Forms.ComboBox();
             this.label12 = new System.Windows.Forms.Label();
             this.insertbtn = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
@@ -65,8 +65,8 @@
             this.movies_delete_combobox = new System.Windows.Forms.ComboBox();
             this.deletebtn = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.backbtn = new System.Windows.Forms.Button();
+            this.showAllbtn = new System.Windows.Forms.Button();
             this.insertionAndUpdateTable.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel10.SuspendLayout();
@@ -169,7 +169,7 @@
             // 
             this.comboBox3.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(277, 14);
+            this.comboBox3.Location = new System.Drawing.Point(277, 23);
             this.comboBox3.Name = "comboBox3";
             this.comboBox3.Size = new System.Drawing.Size(256, 37);
             this.comboBox3.TabIndex = 5;
@@ -180,7 +180,7 @@
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.75159F));
             this.tableLayoutPanel10.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 73.24841F));
             this.tableLayoutPanel10.Controls.Add(this.label11, 0, 0);
-            this.tableLayoutPanel10.Controls.Add(this.maskedTextBox4, 1, 0);
+            this.tableLayoutPanel10.Controls.Add(this.year, 1, 0);
             this.tableLayoutPanel10.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel10.Location = new System.Drawing.Point(18, 378);
             this.tableLayoutPanel10.Name = "tableLayoutPanel10";
@@ -200,15 +200,15 @@
             this.label11.Text = "Year";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // maskedTextBox4
+            // year
             // 
-            this.maskedTextBox4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.maskedTextBox4.Location = new System.Drawing.Point(146, 16);
-            this.maskedTextBox4.Mask = "0000";
-            this.maskedTextBox4.Name = "maskedTextBox4";
-            this.maskedTextBox4.Size = new System.Drawing.Size(387, 35);
-            this.maskedTextBox4.TabIndex = 5;
-            this.maskedTextBox4.ValidatingType = typeof(int);
+            this.year.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.year.Location = new System.Drawing.Point(146, 16);
+            this.year.Mask = "0000";
+            this.year.Name = "year";
+            this.year.Size = new System.Drawing.Size(387, 35);
+            this.year.TabIndex = 5;
+            this.year.ValidatingType = typeof(int);
             // 
             // tableLayoutPanel9
             // 
@@ -216,7 +216,7 @@
             this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.75159F));
             this.tableLayoutPanel9.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 73.24841F));
             this.tableLayoutPanel9.Controls.Add(this.label10, 0, 0);
-            this.tableLayoutPanel9.Controls.Add(this.comboBox2, 1, 0);
+            this.tableLayoutPanel9.Controls.Add(this.category, 1, 0);
             this.tableLayoutPanel9.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel9.Location = new System.Drawing.Point(18, 318);
             this.tableLayoutPanel9.Name = "tableLayoutPanel9";
@@ -236,14 +236,20 @@
             this.label10.Text = "Category";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // comboBox2
+            // category
             // 
-            this.comboBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(146, 14);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(387, 37);
-            this.comboBox2.TabIndex = 5;
+            this.category.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.category.FormattingEnabled = true;
+            this.category.Items.AddRange(new object[] {
+            "Action",
+            "Adventure",
+            "Anime",
+            "Romantic",
+            "Dramatic"});
+            this.category.Location = new System.Drawing.Point(146, 23);
+            this.category.Name = "category";
+            this.category.Size = new System.Drawing.Size(387, 37);
+            this.category.TabIndex = 5;
             // 
             // tableLayoutPanel8
             // 
@@ -251,7 +257,7 @@
             this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.75159F));
             this.tableLayoutPanel8.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 73.24841F));
             this.tableLayoutPanel8.Controls.Add(this.label9, 0, 0);
-            this.tableLayoutPanel8.Controls.Add(this.maskedTextBox3, 1, 0);
+            this.tableLayoutPanel8.Controls.Add(this.duration, 1, 0);
             this.tableLayoutPanel8.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel8.Location = new System.Drawing.Point(18, 258);
             this.tableLayoutPanel8.Name = "tableLayoutPanel8";
@@ -272,14 +278,14 @@
             this.label9.Text = "Duration";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // maskedTextBox3
+            // duration
             // 
-            this.maskedTextBox3.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.maskedTextBox3.Location = new System.Drawing.Point(146, 16);
-            this.maskedTextBox3.Mask = "0:00";
-            this.maskedTextBox3.Name = "maskedTextBox3";
-            this.maskedTextBox3.Size = new System.Drawing.Size(387, 35);
-            this.maskedTextBox3.TabIndex = 5;
+            this.duration.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.duration.Location = new System.Drawing.Point(146, 16);
+            this.duration.Mask = "0:00";
+            this.duration.Name = "duration";
+            this.duration.Size = new System.Drawing.Size(387, 35);
+            this.duration.TabIndex = 5;
             // 
             // tableLayoutPanel7
             // 
@@ -287,7 +293,7 @@
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.75159F));
             this.tableLayoutPanel7.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 73.24841F));
             this.tableLayoutPanel7.Controls.Add(this.label8, 0, 0);
-            this.tableLayoutPanel7.Controls.Add(this.maskedTextBox2, 1, 0);
+            this.tableLayoutPanel7.Controls.Add(this.rating, 1, 0);
             this.tableLayoutPanel7.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel7.Location = new System.Drawing.Point(18, 198);
             this.tableLayoutPanel7.Name = "tableLayoutPanel7";
@@ -307,21 +313,21 @@
             this.label8.Text = "Rating";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // maskedTextBox2
+            // rating
             // 
-            this.maskedTextBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.maskedTextBox2.Location = new System.Drawing.Point(146, 16);
-            this.maskedTextBox2.Mask = "00";
-            this.maskedTextBox2.Name = "maskedTextBox2";
-            this.maskedTextBox2.Size = new System.Drawing.Size(387, 35);
-            this.maskedTextBox2.TabIndex = 5;
+            this.rating.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.rating.Location = new System.Drawing.Point(146, 16);
+            this.rating.Mask = "00";
+            this.rating.Name = "rating";
+            this.rating.Size = new System.Drawing.Size(387, 35);
+            this.rating.TabIndex = 5;
             // 
             // tableLayoutPanel2
             // 
             this.tableLayoutPanel2.ColumnCount = 2;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.75159F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 73.24841F));
-            this.tableLayoutPanel2.Controls.Add(this.textBox1, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.name, 1, 0);
             this.tableLayoutPanel2.Controls.Add(this.label4, 0, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel2.Location = new System.Drawing.Point(18, 138);
@@ -332,13 +338,13 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(536, 54);
             this.tableLayoutPanel2.TabIndex = 13;
             // 
-            // textBox1
+            // name
             // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.textBox1.Location = new System.Drawing.Point(146, 16);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(387, 35);
-            this.textBox1.TabIndex = 3;
+            this.name.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.name.Location = new System.Drawing.Point(146, 16);
+            this.name.Name = "name";
+            this.name.Size = new System.Drawing.Size(387, 35);
+            this.name.TabIndex = 3;
             // 
             // label4
             // 
@@ -357,7 +363,7 @@
             this.tableLayoutPanel13.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.75159F));
             this.tableLayoutPanel13.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 73.24841F));
             this.tableLayoutPanel13.Controls.Add(this.label14, 0, 0);
-            this.tableLayoutPanel13.Controls.Add(this.richTextBox1, 1, 0);
+            this.tableLayoutPanel13.Controls.Add(this.cast, 1, 0);
             this.tableLayoutPanel13.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel13.Location = new System.Drawing.Point(18, 558);
             this.tableLayoutPanel13.Name = "tableLayoutPanel13";
@@ -377,14 +383,14 @@
             this.label14.Text = "Cast";
             this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // richTextBox1
+            // cast
             // 
-            this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBox1.Location = new System.Drawing.Point(146, 3);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(387, 76);
-            this.richTextBox1.TabIndex = 5;
-            this.richTextBox1.Text = "";
+            this.cast.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cast.Location = new System.Drawing.Point(146, 3);
+            this.cast.Name = "cast";
+            this.cast.Size = new System.Drawing.Size(387, 76);
+            this.cast.TabIndex = 5;
+            this.cast.Text = "";
             // 
             // tableLayoutPanel12
             // 
@@ -392,7 +398,7 @@
             this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.75159F));
             this.tableLayoutPanel12.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 73.24841F));
             this.tableLayoutPanel12.Controls.Add(this.label13, 0, 0);
-            this.tableLayoutPanel12.Controls.Add(this.maskedTextBox5, 1, 0);
+            this.tableLayoutPanel12.Controls.Add(this.min_age, 1, 0);
             this.tableLayoutPanel12.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel12.Location = new System.Drawing.Point(18, 498);
             this.tableLayoutPanel12.Name = "tableLayoutPanel12";
@@ -413,21 +419,21 @@
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.label13.Click += new System.EventHandler(this.label13_Click);
             // 
-            // maskedTextBox5
+            // min_age
             // 
-            this.maskedTextBox5.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.maskedTextBox5.Location = new System.Drawing.Point(146, 16);
-            this.maskedTextBox5.Mask = "00";
-            this.maskedTextBox5.Name = "maskedTextBox5";
-            this.maskedTextBox5.Size = new System.Drawing.Size(387, 35);
-            this.maskedTextBox5.TabIndex = 5;
+            this.min_age.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.min_age.Location = new System.Drawing.Point(146, 16);
+            this.min_age.Mask = "00";
+            this.min_age.Name = "min_age";
+            this.min_age.Size = new System.Drawing.Size(387, 35);
+            this.min_age.TabIndex = 5;
             // 
             // tableLayoutPanel11
             // 
             this.tableLayoutPanel11.ColumnCount = 2;
             this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.75159F));
             this.tableLayoutPanel11.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 73.24841F));
-            this.tableLayoutPanel11.Controls.Add(this.comboBox1, 1, 0);
+            this.tableLayoutPanel11.Controls.Add(this.language, 1, 0);
             this.tableLayoutPanel11.Controls.Add(this.label12, 0, 0);
             this.tableLayoutPanel11.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel11.Location = new System.Drawing.Point(18, 438);
@@ -437,17 +443,20 @@
             this.tableLayoutPanel11.Size = new System.Drawing.Size(536, 54);
             this.tableLayoutPanel11.TabIndex = 10;
             // 
-            // comboBox1
+            // language
             // 
-            this.comboBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.language.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.language.Items.AddRange(new object[] {
             "Arabic",
             "English",
-            "Spanish"});
-            this.comboBox1.Location = new System.Drawing.Point(146, 14);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(387, 37);
-            this.comboBox1.TabIndex = 0;
+            "Spanish",
+            "Hindi",
+            "Korean",
+            "Japanese"});
+            this.language.Location = new System.Drawing.Point(146, 23);
+            this.language.Name = "language";
+            this.language.Size = new System.Drawing.Size(387, 37);
+            this.language.TabIndex = 0;
             // 
             // label12
             // 
@@ -469,6 +478,7 @@
             this.insertbtn.TabIndex = 18;
             this.insertbtn.Text = "OK";
             this.insertbtn.UseVisualStyleBackColor = true;
+            this.insertbtn.Click += new System.EventHandler(this.insertbtn_Click);
             // 
             // label5
             // 
@@ -546,6 +556,7 @@
             this.deletebtn.TabIndex = 6;
             this.deletebtn.Text = "Delete";
             this.deletebtn.UseVisualStyleBackColor = true;
+            this.deletebtn.Click += new System.EventHandler(this.delete_click);
             // 
             // label3
             // 
@@ -559,41 +570,42 @@
             this.label3.Text = "Once deleted You cannot REDO";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // button1
+            // backbtn
             // 
-            this.button1.BackColor = System.Drawing.SystemColors.ButtonShadow;
-            this.button1.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonShadow;
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.button1.Location = new System.Drawing.Point(1088, 492);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(190, 50);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "Back";
-            this.button1.UseVisualStyleBackColor = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.backbtn.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.backbtn.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonShadow;
+            this.backbtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.backbtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.backbtn.Location = new System.Drawing.Point(1088, 492);
+            this.backbtn.Name = "backbtn";
+            this.backbtn.Size = new System.Drawing.Size(190, 50);
+            this.backbtn.TabIndex = 5;
+            this.backbtn.Text = "Back";
+            this.backbtn.UseVisualStyleBackColor = false;
+            this.backbtn.Click += new System.EventHandler(this.backbtn_Click);
             // 
-            // button2
+            // showAllbtn
             // 
-            this.button2.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.button2.FlatAppearance.BorderSize = 0;
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.button2.Location = new System.Drawing.Point(716, 492);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(342, 50);
-            this.button2.TabIndex = 6;
-            this.button2.Text = "Show All Movies";
-            this.button2.UseVisualStyleBackColor = false;
+            this.showAllbtn.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.showAllbtn.FlatAppearance.BorderSize = 0;
+            this.showAllbtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.showAllbtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
+            this.showAllbtn.Location = new System.Drawing.Point(716, 492);
+            this.showAllbtn.Name = "showAllbtn";
+            this.showAllbtn.Size = new System.Drawing.Size(342, 50);
+            this.showAllbtn.TabIndex = 6;
+            this.showAllbtn.Text = "Show All Movies";
+            this.showAllbtn.UseVisualStyleBackColor = false;
+            this.showAllbtn.Click += new System.EventHandler(this.sh);
             // 
             // movies
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Azure;
-            this.ClientSize = new System.Drawing.Size(1353, 1024);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(1702, 1024);
+            this.Controls.Add(this.showAllbtn);
+            this.Controls.Add(this.backbtn);
             this.Controls.Add(this.tableLayoutPanel5);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.insertionAndUpdateTable);
@@ -633,8 +645,8 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button backbtn;
+        private System.Windows.Forms.Button showAllbtn;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel11;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel13;
@@ -650,15 +662,15 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel7;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox name;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.MaskedTextBox maskedTextBox4;
-        private System.Windows.Forms.MaskedTextBox maskedTextBox3;
-        private System.Windows.Forms.MaskedTextBox maskedTextBox2;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.MaskedTextBox maskedTextBox5;
-        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.MaskedTextBox year;
+        private System.Windows.Forms.MaskedTextBox duration;
+        private System.Windows.Forms.MaskedTextBox rating;
+        private System.Windows.Forms.ComboBox language;
+        private System.Windows.Forms.ComboBox category;
+        private System.Windows.Forms.MaskedTextBox min_age;
+        private System.Windows.Forms.RichTextBox cast;
         private System.Windows.Forms.Button insertbtn;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox movies_delete_combobox;
