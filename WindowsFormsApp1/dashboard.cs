@@ -22,11 +22,6 @@ namespace WindowsFormsApp1
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void button5_Click(object sender, EventArgs e)
         {
             movies m = new movies();
@@ -34,38 +29,55 @@ namespace WindowsFormsApp1
             this.Hide();
         }
 
-        private void button7_Click(object sender, EventArgs e)
+        private void adminbtn(object sender, EventArgs e)
         {
+            admins a = new admins();
+            a.Show();
+            this.Hide();
+        }
+
+        private void customerbtn(object sender, EventArgs e)
+        {
+            customers c = new customers();
+            c.Show();
+            this.Hide();
+        }
+
+        private void hallsbtn(object sender, EventArgs e)
+        {
+            halls h = new halls();
+            h.Show();
+            this.Hide();
 
         }
 
-        private void button3_Click(object sender, EventArgs e)
+        private void seatsbtn(object sender, EventArgs e)
         {
+            seats s = new seats();
+            s.Show();
+            this.Hide();
 
         }
 
-        private void button9_Click(object sender, EventArgs e)
+        private void ticketsbtn(object sender, EventArgs e)
         {
-
+            tickets ticket = new tickets();
+            ticket.Show();
+            this.Hide();
         }
 
-        private void button4_Click(object sender, EventArgs e)
+        private void showsbtn(object sender, EventArgs e)
         {
-
+            shows s = new shows();
+            s.Show();
+            this.Hide();
         }
 
-        private void button6_Click(object sender, EventArgs e)
+        private void paymentbtn(object sender, EventArgs e)
         {
-
-        }
-
-        private void button8_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
+            payments p = new payments();
+            p.Show();
+            this.Hide();
 
         }
     }
