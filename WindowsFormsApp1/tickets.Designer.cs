@@ -30,15 +30,8 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.insertionPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
-            this.label6 = new System.Windows.Forms.Label();
-            this.customerComboBox = new System.Windows.Forms.ComboBox();
-            this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
-            this.label5 = new System.Windows.Forms.Label();
-            this.paymentIdComboBox = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.label4 = new System.Windows.Forms.Label();
-            this.datePicker = new System.Windows.Forms.DateTimePicker();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.priceTextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -68,9 +61,11 @@
             this.viewByComboBox = new System.Windows.Forms.ComboBox();
             this.label17 = new System.Windows.Forms.Label();
             this.refreshButton = new System.Windows.Forms.Button();
+            this.show_combobox = new System.Windows.Forms.ComboBox();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.seat_combobox = new System.Windows.Forms.ComboBox();
             this.insertionPanel.SuspendLayout();
-            this.tableLayoutPanel5.SuspendLayout();
-            this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.deletePanel.SuspendLayout();
@@ -79,6 +74,7 @@
             this.tableLayoutPanel9.SuspendLayout();
             this.tableLayoutPanel10.SuspendLayout();
             this.viewPanel.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -101,12 +97,11 @@
             this.insertionPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.insertionPanel.ColumnCount = 1;
             this.insertionPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.insertionPanel.Controls.Add(this.tableLayoutPanel5, 0, 4);
-            this.insertionPanel.Controls.Add(this.tableLayoutPanel4, 0, 3);
+            this.insertionPanel.Controls.Add(this.tableLayoutPanel1, 0, 3);
             this.insertionPanel.Controls.Add(this.tableLayoutPanel3, 0, 2);
             this.insertionPanel.Controls.Add(this.tableLayoutPanel2, 0, 1);
-            this.insertionPanel.Controls.Add(this.insertButton, 0, 5);
             this.insertionPanel.Controls.Add(this.label1, 0, 0);
+            this.insertionPanel.Controls.Add(this.insertButton, 0, 5);
             this.insertionPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.insertionPanel.Location = new System.Drawing.Point(39, 108);
             this.insertionPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -116,85 +111,11 @@
             this.insertionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.insertionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.insertionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.insertionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.insertionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.insertionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.insertionPanel.Size = new System.Drawing.Size(441, 370);
+            this.insertionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 59F));
+            this.insertionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 21F));
+            this.insertionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
+            this.insertionPanel.Size = new System.Drawing.Size(441, 350);
             this.insertionPanel.TabIndex = 1;
-            // 
-            // tableLayoutPanel5
-            // 
-            this.tableLayoutPanel5.ColumnCount = 2;
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.75159F));
-            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 73.24841F));
-            this.tableLayoutPanel5.Controls.Add(this.label6, 0, 0);
-            this.tableLayoutPanel5.Controls.Add(this.customerComboBox, 1, 0);
-            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(18, 259);
-            this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-            this.tableLayoutPanel5.RowCount = 1;
-            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(405, 54);
-            this.tableLayoutPanel5.TabIndex = 16;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label6.Location = new System.Drawing.Point(3, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(102, 54);
-            this.label6.TabIndex = 4;
-            this.label6.Text = "Customer";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label6.UseCompatibleTextRendering = true;
-            // 
-            // customerComboBox
-            // 
-            this.customerComboBox.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.customerComboBox.FormattingEnabled = true;
-            this.customerComboBox.Location = new System.Drawing.Point(111, 23);
-            this.customerComboBox.Name = "customerComboBox";
-            this.customerComboBox.Size = new System.Drawing.Size(291, 37);
-            this.customerComboBox.TabIndex = 5;
-            // 
-            // tableLayoutPanel4
-            // 
-            this.tableLayoutPanel4.ColumnCount = 2;
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.75159F));
-            this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 73.24841F));
-            this.tableLayoutPanel4.Controls.Add(this.label5, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.paymentIdComboBox, 1, 0);
-            this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel4.Location = new System.Drawing.Point(18, 199);
-            this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tableLayoutPanel4.Name = "tableLayoutPanel4";
-            this.tableLayoutPanel4.RowCount = 1;
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(405, 54);
-            this.tableLayoutPanel4.TabIndex = 15;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label5.Location = new System.Drawing.Point(3, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(102, 54);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "Payment";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label5.UseCompatibleTextRendering = true;
-            // 
-            // paymentIdComboBox
-            // 
-            this.paymentIdComboBox.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.paymentIdComboBox.FormattingEnabled = true;
-            this.paymentIdComboBox.Location = new System.Drawing.Point(111, 23);
-            this.paymentIdComboBox.Name = "paymentIdComboBox";
-            this.paymentIdComboBox.Size = new System.Drawing.Size(291, 37);
-            this.paymentIdComboBox.TabIndex = 5;
             // 
             // tableLayoutPanel3
             // 
@@ -202,7 +123,7 @@
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.75159F));
             this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 73.24841F));
             this.tableLayoutPanel3.Controls.Add(this.label4, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.datePicker, 1, 0);
+            this.tableLayoutPanel3.Controls.Add(this.show_combobox, 1, 0);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel3.Location = new System.Drawing.Point(18, 139);
             this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -220,18 +141,9 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(102, 54);
             this.label4.TabIndex = 4;
-            this.label4.Text = "Date";
+            this.label4.Text = "Show";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.label4.UseCompatibleTextRendering = true;
-            // 
-            // datePicker
-            // 
-            this.datePicker.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.datePicker.Location = new System.Drawing.Point(111, 17);
-            this.datePicker.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.datePicker.Name = "datePicker";
-            this.datePicker.Size = new System.Drawing.Size(291, 35);
-            this.datePicker.TabIndex = 5;
             // 
             // tableLayoutPanel2
             // 
@@ -272,7 +184,7 @@
             // 
             // insertButton
             // 
-            this.insertButton.Location = new System.Drawing.Point(18, 317);
+            this.insertButton.Location = new System.Drawing.Point(18, 277);
             this.insertButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.insertButton.Name = "insertButton";
             this.insertButton.Size = new System.Drawing.Size(405, 50);
@@ -620,6 +532,53 @@
             this.refreshButton.UseVisualStyleBackColor = false;
             this.refreshButton.Click += new System.EventHandler(this.refreshButton_Click);
             // 
+            // show_combobox
+            // 
+            this.show_combobox.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.show_combobox.FormattingEnabled = true;
+            this.show_combobox.Location = new System.Drawing.Point(111, 14);
+            this.show_combobox.Name = "show_combobox";
+            this.show_combobox.Size = new System.Drawing.Size(291, 37);
+            this.show_combobox.TabIndex = 5;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.75159F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 73.24841F));
+            this.tableLayoutPanel1.Controls.Add(this.label5, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.seat_combobox, 1, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(18, 198);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(405, 54);
+            this.tableLayoutPanel1.TabIndex = 19;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label5.Location = new System.Drawing.Point(3, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(102, 54);
+            this.label5.TabIndex = 4;
+            this.label5.Text = "Seat";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label5.UseCompatibleTextRendering = true;
+            // 
+            // seat_combobox
+            // 
+            this.seat_combobox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.seat_combobox.FormattingEnabled = true;
+            this.seat_combobox.Location = new System.Drawing.Point(111, 3);
+            this.seat_combobox.Name = "seat_combobox";
+            this.seat_combobox.Size = new System.Drawing.Size(291, 37);
+            this.seat_combobox.TabIndex = 5;
+            this.seat_combobox.SelectedIndexChanged += new System.EventHandler(this.seat_combobox_SelectedIndexChanged);
+            // 
             // tickets
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -640,10 +599,6 @@
             this.Load += new System.EventHandler(this.TicketForm_Load);
             this.insertionPanel.ResumeLayout(false);
             this.insertionPanel.PerformLayout();
-            this.tableLayoutPanel5.ResumeLayout(false);
-            this.tableLayoutPanel5.PerformLayout();
-            this.tableLayoutPanel4.ResumeLayout(false);
-            this.tableLayoutPanel4.PerformLayout();
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
@@ -659,6 +614,8 @@
             this.tableLayoutPanel10.PerformLayout();
             this.viewPanel.ResumeLayout(false);
             this.viewPanel.PerformLayout();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -672,15 +629,8 @@
         private System.Windows.Forms.TableLayoutPanel deletePanel;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button backButton;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel5;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.ComboBox customerComboBox;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.ComboBox paymentIdComboBox;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.DateTimePicker datePicker;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.TextBox priceTextBox;
         private System.Windows.Forms.Label label3;
@@ -706,5 +656,9 @@
         private System.Windows.Forms.ComboBox viewByComboBox;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Button refreshButton;
+        private System.Windows.Forms.ComboBox show_combobox;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.ComboBox seat_combobox;
     }
 }

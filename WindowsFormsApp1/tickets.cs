@@ -34,7 +34,11 @@ namespace WindowsFormsApp1
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string query = "SELECT ticket_ID, price, date, payment_id, customer_id FROM Ticket";
+                    string query = @"SELECT t.ticket_ID, t.price, t.date, t.payment_id, t.customer_id,
+                                   ts.Seat_place, ts.Hall_id
+                                   FROM Ticket t
+                                   LEFT JOIN TicketSeat ts ON t.ticket_ID = ts.Ticket_id";
+
                     SqlCommand command = new SqlCommand(query, connection);
                     SqlDataReader reader = command.ExecuteReader();
 
@@ -44,6 +48,8 @@ namespace WindowsFormsApp1
                     table.Columns.Add("Date");
                     table.Columns.Add("Payment ID");
                     table.Columns.Add("Customer ID");
+                    table.Columns.Add("Seat");
+                    table.Columns.Add("Hall");
 
                     while (reader.Read())
                     {
@@ -51,8 +57,10 @@ namespace WindowsFormsApp1
                         row["Ticket ID"] = reader["ticket_ID"];
                         row["Price"] = reader["price"];
                         row["Date"] = reader["date"];
-                        row["Payment ID"] = reader["payment_id"];
-                        row["Customer ID"] = reader["customer_id"];
+                        row["Payment ID"] = reader["payment_id"] == DBNull.Value ? "N/A" : reader["payment_id"];
+                        row["Customer ID"] = reader["customer_id"] == DBNull.Value ? "N/A" : reader["customer_id"];
+                        row["Seat"] = reader["Seat_place"] == DBNull.Value ? "N/A" : reader["Seat_place"];
+                        row["Hall"] = reader["Hall_id"] == DBNull.Value ? "N/A" : reader["Hall_id"];
                         table.Rows.Add(row);
                     }
 
@@ -70,43 +78,7 @@ namespace WindowsFormsApp1
         {
             try
             {
-                // Customer IDs for ticket insertion
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-                    string query = "SELECT customer_ID, firstName, lastName FROM Customer";
-                    SqlCommand command = new SqlCommand(query, connection);
-                    SqlDataReader reader = command.ExecuteReader();
-
-                    customerComboBox.Items.Clear();
-
-                    while (reader.Read())
-                    {
-                        string display = $"{reader["customer_ID"]} - {reader["firstName"]} {reader["lastName"]}";
-                        customerComboBox.Items.Add(display);
-                    }
-
-                    reader.Close();
-                }
-
-                // Payment IDs for ticket insertion
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-                    string query = "SELECT payment_ID FROM Payment";
-                    SqlCommand command = new SqlCommand(query, connection);
-                    SqlDataReader reader = command.ExecuteReader();
-
-                    paymentIdComboBox.Items.Clear();
-
-                    while (reader.Read())
-                    {
-                        paymentIdComboBox.Items.Add(reader["payment_ID"].ToString());
-                    }
-
-                    reader.Close();
-                }
-
+              
                 // Ticket IDs for update/delete
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
@@ -137,40 +109,52 @@ namespace WindowsFormsApp1
         {
             try
             {
-                if (string.IsNullOrEmpty(priceTextBox.Text) || customerComboBox.SelectedItem == null)
+                if (string.IsNullOrEmpty(priceTextBox.Text) || seat_combobox.SelectedItem == null || show_combobox.SelectedItem == null)
                 {
-                    MessageBox.Show("Price and Customer ID fields are required.");
+                    MessageBox.Show("Price, Show and seat fields are required.");
                     return;
                 }
-
-                // Extract customer ID
-                string customerSelection = customerComboBox.SelectedItem.ToString();
-                int customerId = int.Parse(customerSelection.Split('-')[0].Trim());
-
-                // Get payment ID if selected
-                object paymentSelection = paymentIdComboBox.SelectedItem;
-                string paymentId = paymentSelection != null ? paymentSelection.ToString() : null;
 
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string insertQuery = @"INSERT INTO Ticket (price, date, payment_id, customer_id) 
-                                           VALUES (@price, @date, @paymentId, @customerId)";
 
-                    SqlCommand command = new SqlCommand(insertQuery, connection);
-                    command.CommandType = CommandType.Text;
+                    // First, create the ticket
+                    string insertTicketQuery = @"INSERT INTO Ticket (price, date, show_start, show_date) 
+                                               VALUES (@price, @date, @showStart, @showDate);
+                                               SELECT SCOPE_IDENTITY();"; // Get the new ticket ID
 
-                    command.Parameters.AddWithValue("@price", priceTextBox.Text);
-                    command.Parameters.AddWithValue("@date", datePicker.Value.Date);
+                    SqlCommand ticketCommand = new SqlCommand(insertTicketQuery, connection);
+                    ticketCommand.CommandType = CommandType.Text;
 
-                    if (paymentId != null)
-                        command.Parameters.AddWithValue("@paymentId", paymentId);
-                    else
-                        command.Parameters.AddWithValue("@paymentId", DBNull.Value);
+                    // Set the current date as the ticket date
+                    DateTime currentDate = DateTime.Now;
 
-                    command.Parameters.AddWithValue("@customerId", customerId);
+                    ticketCommand.Parameters.AddWithValue("@price", priceTextBox.Text);
+                    ticketCommand.Parameters.AddWithValue("@date", currentDate);
+                    ticketCommand.Parameters.AddWithValue("@showStart", show_combobox.SelectedValue); // Assuming this contains show_start
+                    ticketCommand.Parameters.AddWithValue("@showDate", show_combobox.SelectedItem); // Assuming this contains show_date
 
-                    command.ExecuteNonQuery();
+                    // Get the new ticket ID
+                    int ticketId = Convert.ToInt32(ticketCommand.ExecuteScalar());
+
+                    // Now create the relationship in the TicketSeat table
+                    string insertTicketSeatQuery = @"INSERT INTO TicketSeat (Ticket_id, Seat_place, Hall_id) 
+                                                   VALUES (@ticketId, @seatPlace, @hallId)";
+
+                    SqlCommand ticketSeatCommand = new SqlCommand(insertTicketSeatQuery, connection);
+
+                    // Parse the seat information (assuming format "SeatPlace - HallId" or similar)
+                    string selectedSeat = seat_combobox.SelectedItem.ToString();
+                    string[] seatParts = selectedSeat.Split('-');
+                    string seatPlace = seatParts[0].Trim();
+                    string hallId = seatParts[1].Trim();
+
+                    ticketSeatCommand.Parameters.AddWithValue("@ticketId", ticketId);
+                    ticketSeatCommand.Parameters.AddWithValue("@seatPlace", seatPlace);
+                    ticketSeatCommand.Parameters.AddWithValue("@hallId", hallId);
+
+                    ticketSeatCommand.ExecuteNonQuery();
                     connection.Close();
                 }
 
@@ -178,9 +162,8 @@ namespace WindowsFormsApp1
 
                 // Clear fields after insertion
                 priceTextBox.Text = "";
-                datePicker.Value = DateTime.Today;
-                paymentIdComboBox.SelectedIndex = -1;
-                customerComboBox.SelectedIndex = -1;
+                seat_combobox.SelectedIndex = -1;
+                show_combobox.SelectedIndex = -1;
 
                 // Refresh data
                 LoadTicketsData();
@@ -368,7 +351,70 @@ namespace WindowsFormsApp1
 
         private void backButton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            this.Hide();
+            dashboard mainForm = new dashboard();
+            mainForm.Show();
+
+        }
+
+        private void seat_combobox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                SqlConnection connection = new SqlConnection(connectionString);
+                connection.Open();
+
+                // Updated query to join with Hall table to get available seats
+                string query = @"SELECT s.Seat_place, s.Hall_id 
+                               FROM Seat s 
+                               INNER JOIN Hall h ON s.Hall_id = h.Hall_id
+                               WHERE NOT EXISTS (
+                                   SELECT 1 FROM TicketSeat ts 
+                                   INNER JOIN Ticket t ON ts.Ticket_id = t.Ticket_id 
+                                   WHERE ts.Seat_place = s.Seat_place 
+                                   AND ts.Hall_id = s.Hall_id
+                                   AND t.Show_start = @showStart
+                                   AND t.Show_date = @showDate
+                               )";
+
+                SqlCommand command = new SqlCommand(query, connection);
+
+                // Add parameters for the specific show if a show is selected
+                if (show_combobox.SelectedItem != null)
+                {
+                    // Assuming show_combobox has values that can be split into start time and date
+                    string selectedShow = show_combobox.SelectedItem.ToString();
+                    string[] showParts = selectedShow.Split('-');
+                    string showStart = showParts[0].Trim();
+                    string showDate = showParts[1].Trim();
+
+                    command.Parameters.AddWithValue("@showStart", showStart);
+                    command.Parameters.AddWithValue("@showDate", showDate);
+                }
+
+                SqlDataReader reader = command.ExecuteReader();
+                seat_combobox.Items.Clear();
+
+                while (reader.Read())
+                {
+                    string seatInfo = $"{reader["Seat_place"]} - {reader["Hall_id"]}";
+                    seat_combobox.Items.Add(seatInfo);
+                }
+
+                reader.Close();
+                connection.Close();
+
+                if (seat_combobox.SelectedItem != null)
+                {
+                    string selectedSeat = seat_combobox.SelectedItem.ToString();
+                    string message = $"You have selected seat: {selectedSeat}";
+                    MessageBox.Show(message, "Seat Selection", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading seats: " + ex.Message);
+            }
         }
     }
 }

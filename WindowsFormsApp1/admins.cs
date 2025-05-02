@@ -112,7 +112,7 @@ namespace WindowsFormsApp1
                     command.CommandType = CommandType.Text;
 
                     command.Parameters.AddWithValue("@name", nameTextBox.Text);
-                    command.Parameters.AddWithValue("@email", roleTextBox.Text);
+                    command.Parameters.AddWithValue("@email", emailTextBox.Text);
                     command.Parameters.AddWithValue("@password", passwordTextBox.Text);
 
 
@@ -125,7 +125,7 @@ namespace WindowsFormsApp1
                 // Clear text boxes after insertion
                 nameTextBox.Text = "";
                 passwordTextBox.Text = "";
-                roleTextBox.Text = "";
+                emailTextBox.Text = "";
 
                 // Refresh data
                 LoadAdminsData();
@@ -309,7 +309,9 @@ namespace WindowsFormsApp1
         {
             // Implement code to navigate back to dashboard
             // For example: this.Close(); or Form1 dashboardForm = new Form1(); dashboardForm.Show();
+            dashboard dashboardForm = new dashboard();
             this.Close();
+            dashboardForm.Show();
         }
     }
 }

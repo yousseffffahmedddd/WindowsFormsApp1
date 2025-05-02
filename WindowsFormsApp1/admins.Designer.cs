@@ -32,7 +32,7 @@
             this.insertionPanel = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.label7 = new System.Windows.Forms.Label();
-            this.roleTextBox = new System.Windows.Forms.TextBox();
+            this.emailTextBox = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.label6 = new System.Windows.Forms.Label();
             this.passwordTextBox = new System.Windows.Forms.TextBox();
@@ -122,7 +122,7 @@
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.75159F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 73.24841F));
             this.tableLayoutPanel4.Controls.Add(this.label7, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.roleTextBox, 1, 0);
+            this.tableLayoutPanel4.Controls.Add(this.emailTextBox, 1, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(18, 199);
             this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -140,18 +140,18 @@
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(102, 54);
             this.label7.TabIndex = 4;
-            this.label7.Text = "Role";
+            this.label7.Text = "Email";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.label7.UseCompatibleTextRendering = true;
             // 
-            // roleTextBox
+            // emailTextBox
             // 
-            this.roleTextBox.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.roleTextBox.Location = new System.Drawing.Point(111, 17);
-            this.roleTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.roleTextBox.Name = "roleTextBox";
-            this.roleTextBox.Size = new System.Drawing.Size(291, 35);
-            this.roleTextBox.TabIndex = 3;
+            this.emailTextBox.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.emailTextBox.Location = new System.Drawing.Point(111, 17);
+            this.emailTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.emailTextBox.Name = "emailTextBox";
+            this.emailTextBox.Size = new System.Drawing.Size(291, 35);
+            this.emailTextBox.TabIndex = 3;
             // 
             // tableLayoutPanel3
             // 
@@ -459,7 +459,7 @@
             this.fieldComboBox.Items.AddRange(new object[] {
             "name",
             "password",
-            "role"});
+            "email"});
             this.fieldComboBox.Location = new System.Drawing.Point(207, 2);
             this.fieldComboBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.fieldComboBox.Name = "fieldComboBox";
@@ -545,7 +545,7 @@
             this.viewByComboBox.FormattingEnabled = true;
             this.viewByComboBox.Items.AddRange(new object[] {
             "All",
-            "Role"});
+            "Email"});
             this.viewByComboBox.Location = new System.Drawing.Point(237, 30);
             this.viewByComboBox.Name = "viewByComboBox";
             this.viewByComboBox.Size = new System.Drawing.Size(325, 28);
@@ -628,7 +628,7 @@
         private System.Windows.Forms.Button backButton;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.TextBox roleTextBox;
+        private System.Windows.Forms.TextBox emailTextBox;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
