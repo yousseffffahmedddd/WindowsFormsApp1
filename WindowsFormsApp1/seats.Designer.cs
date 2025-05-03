@@ -1,4 +1,6 @@
-﻿namespace WindowsFormsApp1
+﻿using System;
+
+namespace WindowsFormsApp1
 {
     partial class seats
     {
@@ -495,6 +497,7 @@
             this.PerformLayout();
 
         }
+
 
         #endregion
 

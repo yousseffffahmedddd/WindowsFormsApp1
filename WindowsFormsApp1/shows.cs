@@ -7,8 +7,7 @@ namespace WindowsFormsApp1
 {
     public partial class shows : Form
     {
-        // Connection string for database
-        private string connectionString = "Data Source=DESKTOP-JDD3HCC\\MSSQLSERVER01;Initial Catalog=cinema_DB;Integrated Security=True;";
+        private string connectionString = "Data Source=DESKTOP-JDD3HCC\\MSSQLSERVER01;Initial Catalog=CinemaDB;Integrated Security=True;";
 
         public shows()
         {
@@ -115,12 +114,12 @@ namespace WindowsFormsApp1
                     SqlCommand command = new SqlCommand(query, connection);
                     SqlDataReader reader = command.ExecuteReader();
 
-                    hallIdComboBox.Items.Clear();
+                    hall_combobox.Items.Clear();
 
                     while (reader.Read())
                     {
                         string display = $"{reader["Hall_id"]} - Capacity: {reader["Hall_cap"]}";
-                        hallIdComboBox.Items.Add(display);
+                        hall_combobox.Items.Add(display);
                         
                     }
 
@@ -167,9 +166,9 @@ namespace WindowsFormsApp1
         {
             try
             {
-                if (datePicker.Value == null || string.IsNullOrEmpty(startTimeTextBox.Text) || hallIdComboBox.SelectedItem == null)
+                if (datePicker.Value == null || string.IsNullOrEmpty(startTimeTextBox.Text) ||endTimeTextBox.Text == null || adminManagerComboBox.SelectedItem.Equals(null)|| hall_combobox.SelectedItem == null)
                 {
-                    MessageBox.Show("Date, Start Time, and Hall fields are required.");
+                    MessageBox.Show("Date, Start Time,End time,Admin, and Hall fields are required.");
                     return;
                 }
 
@@ -183,7 +182,7 @@ namespace WindowsFormsApp1
                 }
 
                 // Get hall ID from selected item
-                string selectedHall = hallIdComboBox.SelectedItem.ToString();
+                string selectedHall = hall_combobox.SelectedItem.ToString();
                 string hallId = selectedHall.Split('-')[0].Trim();
 
                 using (SqlConnection connection = new SqlConnection(connectionString))
@@ -290,23 +289,15 @@ namespace WindowsFormsApp1
                 string showTime = parts[1].Trim();
 
                 string selectedField = fieldComboBox.SelectedItem.ToString();
-                string dbField = "";
 
-                // Map UI field names to database field names
-                switch (selectedField)
-                {
-                    case "End Time": dbField = "Show_end"; break;
-                    case "Admin Manager": dbField = "Admin_id"; break;
-                    case "Hall": dbField = "Hall_id"; break;
-                    default: dbField = selectedField.Replace(" ", "_"); break;
-                }
+                
 
                 string newValue = updateValueTextBox.Text;
 
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string updateQuery = $"UPDATE Show SET {dbField} = @newValue WHERE Show_date = @date AND Show_start = @startTime";
+                    string updateQuery = $"UPDATE Show SET {selectedField} = @newValue WHERE Show_date = @date AND Show_start = @startTime";
 
                     SqlCommand command = new SqlCommand(updateQuery, connection);
                     command.Parameters.AddWithValue("@newValue", newValue);
@@ -436,7 +427,9 @@ namespace WindowsFormsApp1
 
         private void backButton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            dashboard d = new dashboard();
+            d.Show();
+            this.Hide();
         }
     }
 }

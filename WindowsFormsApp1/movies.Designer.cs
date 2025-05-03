@@ -1,4 +1,6 @@
-﻿namespace WindowsFormsApp1
+﻿using System;
+
+namespace WindowsFormsApp1
 {
     partial class movies
     {
@@ -30,6 +32,7 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.insertionAndUpdateTable = new System.Windows.Forms.TableLayoutPanel();
+            this.textBox2 = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
             this.label11 = new System.Windows.Forms.Label();
             this.maskedTextBox4 = new System.Windows.Forms.MaskedTextBox();
@@ -55,6 +58,7 @@
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.OK = new System.Windows.Forms.Button();
+            this.Cast_roles = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.label6 = new System.Windows.Forms.Label();
@@ -65,19 +69,22 @@
             this.button1 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.label17 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.label16 = new System.Windows.Forms.Label();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.textBox5 = new System.Windows.Forms.TextBox();
+            this.update_movie_combobox = new System.Windows.Forms.ComboBox();
+            this.update_textbox = new System.Windows.Forms.TextBox();
+            this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.update_attr_combobox = new System.Windows.Forms.ComboBox();
+            this.label17 = new System.Windows.Forms.Label();
             this.update = new System.Windows.Forms.Button();
             this.label18 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
+            this.button2 = new System.Windows.Forms.Button();
+            this.tableLayoutPanel14 = new System.Windows.Forms.TableLayoutPanel();
+            this.label19 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel15 = new System.Windows.Forms.TableLayoutPanel();
+            this.label22 = new System.Windows.Forms.Label();
             this.insertionAndUpdateTable.SuspendLayout();
             this.tableLayoutPanel10.SuspendLayout();
             this.tableLayoutPanel9.SuspendLayout();
@@ -90,9 +97,11 @@
             this.tableLayoutPanel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
-            this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
+            this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
+            this.tableLayoutPanel14.SuspendLayout();
+            this.tableLayoutPanel15.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -116,22 +125,24 @@
             this.insertionAndUpdateTable.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.insertionAndUpdateTable.ColumnCount = 1;
             this.insertionAndUpdateTable.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.insertionAndUpdateTable.Controls.Add(this.tableLayoutPanel15, 0, 10);
+            this.insertionAndUpdateTable.Controls.Add(this.tableLayoutPanel14, 0, 9);
             this.insertionAndUpdateTable.Controls.Add(this.tableLayoutPanel10, 0, 5);
             this.insertionAndUpdateTable.Controls.Add(this.tableLayoutPanel9, 0, 4);
             this.insertionAndUpdateTable.Controls.Add(this.tableLayoutPanel8, 0, 3);
             this.insertionAndUpdateTable.Controls.Add(this.tableLayoutPanel7, 0, 2);
             this.insertionAndUpdateTable.Controls.Add(this.tableLayoutPanel2, 0, 1);
-            this.insertionAndUpdateTable.Controls.Add(this.OK, 0, 10);
             this.insertionAndUpdateTable.Controls.Add(this.tableLayoutPanel13, 0, 8);
             this.insertionAndUpdateTable.Controls.Add(this.tableLayoutPanel12, 0, 7);
             this.insertionAndUpdateTable.Controls.Add(this.tableLayoutPanel11, 0, 6);
             this.insertionAndUpdateTable.Controls.Add(this.label1, 0, 0);
+            this.insertionAndUpdateTable.Controls.Add(this.OK, 0, 11);
             this.insertionAndUpdateTable.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.insertionAndUpdateTable.Location = new System.Drawing.Point(39, 108);
             this.insertionAndUpdateTable.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.insertionAndUpdateTable.Name = "insertionAndUpdateTable";
-            this.insertionAndUpdateTable.Padding = new System.Windows.Forms.Padding(15, 15, 15, 15);
-            this.insertionAndUpdateTable.RowCount = 11;
+            this.insertionAndUpdateTable.Padding = new System.Windows.Forms.Padding(15);
+            this.insertionAndUpdateTable.RowCount = 12;
             this.insertionAndUpdateTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.insertionAndUpdateTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.insertionAndUpdateTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
@@ -140,14 +151,23 @@
             this.insertionAndUpdateTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.insertionAndUpdateTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.insertionAndUpdateTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.insertionAndUpdateTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 88F));
-            this.insertionAndUpdateTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.insertionAndUpdateTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
+            this.insertionAndUpdateTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 85F));
+            this.insertionAndUpdateTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 56F));
+            this.insertionAndUpdateTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 62F));
+            this.insertionAndUpdateTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
             this.insertionAndUpdateTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.insertionAndUpdateTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.insertionAndUpdateTable.Size = new System.Drawing.Size(441, 725);
+            this.insertionAndUpdateTable.Size = new System.Drawing.Size(441, 760);
             this.insertionAndUpdateTable.TabIndex = 1;
             this.insertionAndUpdateTable.Paint += new System.Windows.Forms.PaintEventHandler(this.insertionAndUpdateTable_Paint);
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(112, 4);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(4);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(289, 35);
+            this.textBox2.TabIndex = 21;
             // 
             // tableLayoutPanel10
             // 
@@ -208,9 +228,9 @@
             // 
             this.textBox3.BackColor = System.Drawing.SystemColors.HighlightText;
             this.textBox3.Location = new System.Drawing.Point(113, 5);
-            this.textBox3.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.textBox3.Margin = new System.Windows.Forms.Padding(5);
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(287, 35);
+            this.textBox3.Size = new System.Drawing.Size(286, 35);
             this.textBox3.TabIndex = 9;
             // 
             // label10
@@ -348,13 +368,14 @@
             this.tableLayoutPanel13.Controls.Add(this.label14, 0, 0);
             this.tableLayoutPanel13.Controls.Add(this.richTextBox1, 1, 0);
             this.tableLayoutPanel13.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel13.Location = new System.Drawing.Point(18, 500);
+            this.tableLayoutPanel13.Location = new System.Drawing.Point(18, 498);
             this.tableLayoutPanel13.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tableLayoutPanel13.Name = "tableLayoutPanel13";
             this.tableLayoutPanel13.RowCount = 1;
             this.tableLayoutPanel13.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel13.Size = new System.Drawing.Size(405, 81);
+            this.tableLayoutPanel13.Size = new System.Drawing.Size(405, 80);
             this.tableLayoutPanel13.TabIndex = 12;
+            this.tableLayoutPanel13.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel13_Paint);
             // 
             // label14
             // 
@@ -362,9 +383,9 @@
             this.label14.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label14.Location = new System.Drawing.Point(3, 0);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(102, 81);
+            this.label14.Size = new System.Drawing.Size(102, 80);
             this.label14.TabIndex = 4;
-            this.label14.Text = "Cast";
+            this.label14.Text = "Cast_members";
             this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.label14.UseCompatibleTextRendering = true;
             // 
@@ -374,7 +395,7 @@
             this.richTextBox1.Location = new System.Drawing.Point(111, 2);
             this.richTextBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(291, 77);
+            this.richTextBox1.Size = new System.Drawing.Size(291, 76);
             this.richTextBox1.TabIndex = 5;
             this.richTextBox1.Text = "";
             // 
@@ -437,9 +458,9 @@
             // 
             this.textBox4.BackColor = System.Drawing.SystemColors.HighlightText;
             this.textBox4.Location = new System.Drawing.Point(113, 5);
-            this.textBox4.Margin = new System.Windows.Forms.Padding(5, 5, 5, 5);
+            this.textBox4.Margin = new System.Windows.Forms.Padding(5);
             this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(287, 35);
+            this.textBox4.Size = new System.Drawing.Size(286, 35);
             this.textBox4.TabIndex = 10;
             // 
             // label12
@@ -456,20 +477,29 @@
             // 
             // OK
             // 
-            this.OK.Location = new System.Drawing.Point(18, 617);
+            this.OK.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.OK.Location = new System.Drawing.Point(18, 700);
             this.OK.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.OK.Name = "OK";
-            this.OK.Size = new System.Drawing.Size(405, 55);
+            this.OK.Size = new System.Drawing.Size(405, 43);
             this.OK.TabIndex = 18;
             this.OK.Text = "Insert";
             this.OK.UseVisualStyleBackColor = true;
             this.OK.Click += new System.EventHandler(this.OK_Click);
             // 
+            // Cast_roles
+            // 
+            this.Cast_roles.Location = new System.Drawing.Point(112, 4);
+            this.Cast_roles.Margin = new System.Windows.Forms.Padding(4);
+            this.Cast_roles.Name = "Cast_roles";
+            this.Cast_roles.Size = new System.Drawing.Size(289, 35);
+            this.Cast_roles.TabIndex = 20;
+            // 
             // label5
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F);
-            this.label5.Location = new System.Drawing.Point(29, 32);
+            this.label5.Location = new System.Drawing.Point(30, 32);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(471, 55);
             this.label5.TabIndex = 2;
@@ -488,10 +518,10 @@
             this.tableLayoutPanel5.Controls.Add(this.deletebtn, 0, 3);
             this.tableLayoutPanel5.Controls.Add(this.label3, 0, 4);
             this.tableLayoutPanel5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.tableLayoutPanel5.Location = new System.Drawing.Point(512, 534);
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(512, 538);
             this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tableLayoutPanel5.Name = "tableLayoutPanel5";
-            this.tableLayoutPanel5.Padding = new System.Windows.Forms.Padding(15, 15, 15, 15);
+            this.tableLayoutPanel5.Padding = new System.Windows.Forms.Padding(15);
             this.tableLayoutPanel5.RowCount = 5;
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
@@ -529,9 +559,6 @@
             // 
             this.movies_delete_combobox.Dock = System.Windows.Forms.DockStyle.Top;
             this.movies_delete_combobox.FormattingEnabled = true;
-            this.movies_delete_combobox.Items.AddRange(new object[] {
-            "Mov_name",
-            "Mov_year"});
             this.movies_delete_combobox.Location = new System.Drawing.Point(18, 104);
             this.movies_delete_combobox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.movies_delete_combobox.Name = "movies_delete_combobox";
@@ -586,7 +613,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
             this.dataGridView1.RowTemplate.Height = 26;
-            this.dataGridView1.Size = new System.Drawing.Size(881, 725);
+            this.dataGridView1.Size = new System.Drawing.Size(982, 744);
             this.dataGridView1.TabIndex = 7;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
@@ -597,7 +624,7 @@
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel4, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.textBox5, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.update_textbox, 0, 4);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 0, 2);
             this.tableLayoutPanel1.Controls.Add(this.label17, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.update, 0, 5);
@@ -617,83 +644,20 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(436, 391);
             this.tableLayoutPanel1.TabIndex = 11;
             // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.BackColor = System.Drawing.Color.CadetBlue;
-            this.label17.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F);
-            this.label17.Location = new System.Drawing.Point(18, 15);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(400, 49);
-            this.label17.TabIndex = 0;
-            this.label17.Text = "Update";
-            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label17.Click += new System.EventHandler(this.label17_Click);
-            // 
-            // tableLayoutPanel3
-            // 
-            this.tableLayoutPanel3.ColumnCount = 2;
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.16773F));
-            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.83227F));
-            this.tableLayoutPanel3.Controls.Add(this.label2, 0, 0);
-            this.tableLayoutPanel3.Controls.Add(this.comboBox3, 1, 0);
-            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(18, 132);
-            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
-            this.tableLayoutPanel3.RowCount = 1;
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 54F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(400, 57);
-            this.tableLayoutPanel3.TabIndex = 20;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label2.Location = new System.Drawing.Point(3, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(198, 57);
-            this.label2.TabIndex = 4;
-            this.label2.Text = "Select one to update";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label2.UseCompatibleTextRendering = true;
-            // 
-            // comboBox3
-            // 
-            this.comboBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Items.AddRange(new object[] {
-            "name",
-            "rating",
-            "duration",
-            "category",
-            "year",
-            "language",
-            "min_age",
-            "cast"});
-            this.comboBox3.Location = new System.Drawing.Point(207, 2);
-            this.comboBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(190, 40);
-            this.comboBox3.TabIndex = 5;
-            this.comboBox3.SelectedIndexChanged += new System.EventHandler(this.comboBox3_SelectedIndexChanged);
-            // 
             // tableLayoutPanel4
             // 
             this.tableLayoutPanel4.ColumnCount = 2;
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.16773F));
             this.tableLayoutPanel4.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.83227F));
             this.tableLayoutPanel4.Controls.Add(this.label16, 0, 0);
-            this.tableLayoutPanel4.Controls.Add(this.comboBox2, 1, 0);
+            this.tableLayoutPanel4.Controls.Add(this.update_movie_combobox, 1, 0);
             this.tableLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel4.Location = new System.Drawing.Point(18, 66);
             this.tableLayoutPanel4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tableLayoutPanel4.Name = "tableLayoutPanel4";
             this.tableLayoutPanel4.RowCount = 1;
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 54F));
+            this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 62F));
             this.tableLayoutPanel4.Size = new System.Drawing.Size(400, 62);
             this.tableLayoutPanel4.TabIndex = 22;
             // 
@@ -709,33 +673,88 @@
             this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.label16.UseCompatibleTextRendering = true;
             // 
-            // comboBox2
+            // update_movie_combobox
             // 
-            this.comboBox2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
-            "name",
-            "rating",
-            "duration",
-            "category",
-            "year",
-            "language",
-            "min_age",
-            "cast"});
-            this.comboBox2.Location = new System.Drawing.Point(207, 2);
-            this.comboBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(190, 40);
-            this.comboBox2.TabIndex = 5;
+            this.update_movie_combobox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.update_movie_combobox.FormattingEnabled = true;
+            this.update_movie_combobox.Location = new System.Drawing.Point(207, 2);
+            this.update_movie_combobox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.update_movie_combobox.Name = "update_movie_combobox";
+            this.update_movie_combobox.Size = new System.Drawing.Size(190, 40);
+            this.update_movie_combobox.TabIndex = 5;
             // 
-            // textBox5
+            // update_textbox
             // 
-            this.textBox5.Dock = System.Windows.Forms.DockStyle.Top;
-            this.textBox5.Location = new System.Drawing.Point(18, 242);
-            this.textBox5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(400, 39);
-            this.textBox5.TabIndex = 21;
+            this.update_textbox.Dock = System.Windows.Forms.DockStyle.Top;
+            this.update_textbox.Location = new System.Drawing.Point(18, 242);
+            this.update_textbox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.update_textbox.Name = "update_textbox";
+            this.update_textbox.Size = new System.Drawing.Size(400, 39);
+            this.update_textbox.TabIndex = 21;
+            // 
+            // tableLayoutPanel3
+            // 
+            this.tableLayoutPanel3.ColumnCount = 2;
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.16773F));
+            this.tableLayoutPanel3.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.83227F));
+            this.tableLayoutPanel3.Controls.Add(this.label2, 0, 0);
+            this.tableLayoutPanel3.Controls.Add(this.update_attr_combobox, 1, 0);
+            this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(18, 132);
+            this.tableLayoutPanel3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tableLayoutPanel3.Name = "tableLayoutPanel3";
+            this.tableLayoutPanel3.RowCount = 1;
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 57F));
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(400, 57);
+            this.tableLayoutPanel3.TabIndex = 20;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label2.Location = new System.Drawing.Point(3, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(198, 57);
+            this.label2.TabIndex = 4;
+            this.label2.Text = "Select one to update";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label2.UseCompatibleTextRendering = true;
+            // 
+            // update_attr_combobox
+            // 
+            this.update_attr_combobox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.update_attr_combobox.FormattingEnabled = true;
+            this.update_attr_combobox.Items.AddRange(new object[] {
+            "Mov_name",
+            "Mov_rating",
+            "Mov_duration",
+            "Mov_category",
+            "Mov_year",
+            "Mov_language",
+            "Mov_minAge",
+            "Mov_cast_roles",
+            "Mov_cast_members"});
+            this.update_attr_combobox.Location = new System.Drawing.Point(207, 2);
+            this.update_attr_combobox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.update_attr_combobox.Name = "update_attr_combobox";
+            this.update_attr_combobox.Size = new System.Drawing.Size(190, 40);
+            this.update_attr_combobox.TabIndex = 5;
+            this.update_attr_combobox.SelectedIndexChanged += new System.EventHandler(this.comboBox3_SelectedIndexChanged);
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.BackColor = System.Drawing.Color.CadetBlue;
+            this.label17.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F);
+            this.label17.Location = new System.Drawing.Point(18, 15);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(400, 49);
+            this.label17.TabIndex = 0;
+            this.label17.Text = "Update";
+            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label17.Click += new System.EventHandler(this.label17_Click);
             // 
             // update
             // 
@@ -763,41 +782,87 @@
             this.label18.TabIndex = 23;
             this.label18.Text = "insert value";
             // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.label19.Location = new System.Drawing.Point(3, 29);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(229, 32);
-            this.label19.TabIndex = 16;
-            this.label19.Text = "Show Movies by:";
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(238, 30);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(324, 28);
-            this.comboBox1.TabIndex = 15;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            // 
             // tableLayoutPanel6
             // 
             this.tableLayoutPanel6.ColumnCount = 2;
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 41.59292F));
             this.tableLayoutPanel6.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 58.40708F));
-            this.tableLayoutPanel6.Controls.Add(this.comboBox1, 1, 0);
-            this.tableLayoutPanel6.Controls.Add(this.label19, 0, 0);
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(1189, 872);
+            this.tableLayoutPanel6.Controls.Add(this.button2, 1, 0);
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(1167, 872);
+            this.tableLayoutPanel6.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 1;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(565, 61);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(586, 61);
             this.tableLayoutPanel6.TabIndex = 17;
             this.tableLayoutPanel6.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel6_Paint);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(247, 4);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(335, 53);
+            this.button2.TabIndex = 17;
+            this.button2.Text = "Show Movies";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // tableLayoutPanel14
+            // 
+            this.tableLayoutPanel14.ColumnCount = 2;
+            this.tableLayoutPanel14.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.75159F));
+            this.tableLayoutPanel14.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 73.24841F));
+            this.tableLayoutPanel14.Controls.Add(this.label19, 0, 0);
+            this.tableLayoutPanel14.Controls.Add(this.Cast_roles, 1, 0);
+            this.tableLayoutPanel14.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tableLayoutPanel14.Location = new System.Drawing.Point(18, 582);
+            this.tableLayoutPanel14.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tableLayoutPanel14.Name = "tableLayoutPanel14";
+            this.tableLayoutPanel14.RowCount = 1;
+            this.tableLayoutPanel14.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel14.Size = new System.Drawing.Size(405, 52);
+            this.tableLayoutPanel14.TabIndex = 22;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label19.Location = new System.Drawing.Point(3, 0);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(102, 52);
+            this.label19.TabIndex = 4;
+            this.label19.Text = "Cast role";
+            this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label19.UseCompatibleTextRendering = true;
+            // 
+            // tableLayoutPanel15
+            // 
+            this.tableLayoutPanel15.ColumnCount = 2;
+            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.75159F));
+            this.tableLayoutPanel15.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 73.24841F));
+            this.tableLayoutPanel15.Controls.Add(this.label22, 0, 0);
+            this.tableLayoutPanel15.Controls.Add(this.textBox2, 1, 0);
+            this.tableLayoutPanel15.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tableLayoutPanel15.Location = new System.Drawing.Point(18, 642);
+            this.tableLayoutPanel15.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tableLayoutPanel15.Name = "tableLayoutPanel15";
+            this.tableLayoutPanel15.RowCount = 1;
+            this.tableLayoutPanel15.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel15.Size = new System.Drawing.Size(405, 54);
+            this.tableLayoutPanel15.TabIndex = 23;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label22.Location = new System.Drawing.Point(3, 0);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(102, 54);
+            this.label22.TabIndex = 4;
+            this.label22.Text = "Admin id";
+            this.label22.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label22.UseCompatibleTextRendering = true;
             // 
             // movies
             // 
@@ -839,15 +904,23 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
-            this.tableLayoutPanel3.ResumeLayout(false);
-            this.tableLayoutPanel3.PerformLayout();
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel4.PerformLayout();
+            this.tableLayoutPanel3.ResumeLayout(false);
+            this.tableLayoutPanel3.PerformLayout();
             this.tableLayoutPanel6.ResumeLayout(false);
-            this.tableLayoutPanel6.PerformLayout();
+            this.tableLayoutPanel14.ResumeLayout(false);
+            this.tableLayoutPanel14.PerformLayout();
+            this.tableLayoutPanel15.ResumeLayout(false);
+            this.tableLayoutPanel15.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
@@ -893,15 +966,20 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox update_attr_combobox;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel4;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.TextBox textBox5;
+        private System.Windows.Forms.ComboBox update_movie_combobox;
+        private System.Windows.Forms.TextBox update_textbox;
         private System.Windows.Forms.Button update;
         private System.Windows.Forms.Label label18;
-        private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
+        private System.Windows.Forms.TextBox Cast_roles;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel15;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel14;
+        private System.Windows.Forms.Label label19;
     }
 }

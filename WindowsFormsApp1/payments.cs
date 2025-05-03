@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
@@ -7,8 +8,7 @@ namespace WindowsFormsApp1
 {
     public partial class payments : Form
     {
-        // Connection string for database
-        private string connectionString = "Data Source=DESKTOP-R2SLAOP\\SQLEXPRESS;Initial Catalog=Cinema_ticket_booking_system;Integrated Security=True";
+        private string connectionString = "Data Source=DESKTOP-JDD3HCC\\MSSQLSERVER01;Initial Catalog=CinemaDB;Integrated Security=True;";
 
         public payments()
         {
@@ -17,24 +17,20 @@ namespace WindowsFormsApp1
 
         private void payments_Load(object sender, EventArgs e)
         {
-            // Set the form window state to maximized
             this.WindowState = FormWindowState.Maximized;
 
-            // Load data into the DataGridView
+            // Populate filter combobox if it exists
+            if (viewByComboBox != null)
+            {
+                viewByComboBox.Items.Clear();
+                viewByComboBox.Items.Add("All");
+                viewByComboBox.Items.Add("Date");
+                viewByComboBox.Items.Add("Status");
+                viewByComboBox.Items.Add("Method");
+                viewByComboBox.Items.Add("Customer");
+            }
+
             LoadPaymentsData();
-
-            // Load payment IDs for update/delete, and customer IDs for insertion
-            PopulateComboBoxes();
-
-            // Add payment methods to the combo box
-            methodComboBox.Items.Add("Credit Card");
-            methodComboBox.Items.Add("Cash");
-            methodComboBox.Items.Add("Online");
-
-            // Add payment statuses to the combo box
-            statusComboBox.Items.Add("Completed");
-            statusComboBox.Items.Add("Pending");
-            statusComboBox.Items.Add("Failed");
         }
 
         private void LoadPaymentsData()
@@ -44,246 +40,90 @@ namespace WindowsFormsApp1
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string query = "SELECT payment_ID, date, paymentID, tickets_num, customerID, method, status FROM Payment";
+
+                    // Modified query to handle payment data correctly
+                    // Using LEFT JOIN because a payment might not have tickets yet
+                    // Or might have multiple tickets
+                    string query = @"
+                            SELECT 
+                                p.Payment_id, 
+                                p.Payment_date, 
+                                p.Payment_method, 
+                                p.Payment_status, 
+                                p.Payment_amount,
+                                COALESCE(tp.TotalTickets, 0) AS Tickets_Count,
+                                CASE 
+                                    WHEN c.Customer_id IS NULL THEN 'N/A'
+                                    ELSE CONCAT(c.Customer_firstName, ' ', c.Customer_lastName) 
+                                END AS Customer_Name,
+                                COALESCE(c.Customer_id, 0) AS Customer_id
+                            FROM 
+                                Payment p
+                            LEFT JOIN (
+                                SELECT 
+                                    tp.Payment_id, 
+                                    SUM(tp.num_of_tickets) AS TotalTickets,
+                                    MIN(t.Customer_id) AS Customer_id
+                                FROM 
+                                    TicketPayments tp
+                                JOIN 
+                                    Ticket t ON tp.Ticket_id = t.Ticket_id
+                                GROUP BY 
+                                    tp.Payment_id
+                            ) AS tp ON p.Payment_id = tp.Payment_id
+                            LEFT JOIN 
+                                Customer c ON tp.Customer_id = c.Customer_id
+                            ORDER BY 
+                                p.Payment_date DESC";
+
                     SqlCommand command = new SqlCommand(query, connection);
                     SqlDataReader reader = command.ExecuteReader();
 
                     DataTable table = new DataTable();
                     table.Columns.Add("Payment ID");
                     table.Columns.Add("Date");
-                    table.Columns.Add("Payment Reference");
-                    table.Columns.Add("Tickets Number");
-                    table.Columns.Add("Customer ID");
                     table.Columns.Add("Method");
                     table.Columns.Add("Status");
+                    table.Columns.Add("Amount");
+                    table.Columns.Add("Tickets Count");
+                    table.Columns.Add("Customer");
+                    table.Columns.Add("Customer ID");
 
                     while (reader.Read())
                     {
                         DataRow row = table.NewRow();
-                        row["Payment ID"] = reader["payment_ID"];
-                        row["Date"] = reader["date"];
-                        row["Payment Reference"] = reader["paymentID"];
-                        row["Tickets Number"] = reader["tickets_num"];
-                        row["Customer ID"] = reader["customerID"];
-                        row["Method"] = reader["method"];
-                        row["Status"] = reader["status"];
+                        row["Payment ID"] = reader["Payment_id"];
+                        row["Date"] = Convert.ToDateTime(reader["Payment_date"]).ToString("yyyy-MM-dd HH:mm:ss");
+                        row["Method"] = reader["Payment_method"];
+                        row["Status"] = Convert.ToBoolean(reader["Payment_status"]) ? "Completed" : "Pending";
+                        row["Amount"] = string.Format("{0:C}", reader["Payment_amount"]);
+                        row["Tickets Count"] = reader["Tickets_Count"];
+                        row["Customer"] = reader["Customer_Name"];
+                        row["Customer ID"] = reader["Customer_id"];
                         table.Rows.Add(row);
                     }
 
                     reader.Close();
                     dataGridView1.DataSource = table;
+
+                    // Format the DataGridView for better readability
+                    FormatDataGridView();
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error loading data: " + ex.Message);
+                MessageBox.Show("Error loading payment data: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void PopulateComboBoxes()
+        private void FormatDataGridView()
         {
-            try
+            // Apply formatting to DataGridView if it exists
+            if (dataGridView1 != null && dataGridView1.Columns.Count > 0)
             {
-                // Customer IDs for payment insertion
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-                    string query = "SELECT customer_ID, firstName, lastName FROM Customer";
-                    SqlCommand command = new SqlCommand(query, connection);
-                    SqlDataReader reader = command.ExecuteReader();
-
-                    customerComboBox.Items.Clear();
-
-                    while (reader.Read())
-                    {
-                        string display = $"{reader["customer_ID"]} - {reader["firstName"]} {reader["lastName"]}";
-                        customerComboBox.Items.Add(display);
-                    }
-
-                    reader.Close();
-                }
-
-                // Payment IDs for update/delete
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-                    string query = "SELECT payment_ID FROM Payment";
-                    SqlCommand command = new SqlCommand(query, connection);
-                    SqlDataReader reader = command.ExecuteReader();
-
-                    paymentDeleteComboBox.Items.Clear();
-                    paymentUpdateComboBox.Items.Clear();
-
-                    while (reader.Read())
-                    {
-                        paymentDeleteComboBox.Items.Add(reader["payment_ID"].ToString());
-                        paymentUpdateComboBox.Items.Add(reader["payment_ID"].ToString());
-                    }
-
-                    reader.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error populating comboboxes: " + ex.Message);
-            }
-        }
-
-        private void insertButton_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (customerComboBox.SelectedItem == null || methodComboBox.SelectedItem == null || statusComboBox.SelectedItem == null)
-                {
-                    MessageBox.Show("Customer ID, Method, and Status fields are required.");
-                    return;
-                }
-
-                // Extract customer ID
-                string customerSelection = customerComboBox.SelectedItem.ToString();
-                int customerId = int.Parse(customerSelection.Split('-')[0].Trim());
-
-                string method = methodComboBox.SelectedItem.ToString();
-                string status = statusComboBox.SelectedItem.ToString();
-
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-                    string insertQuery = @"INSERT INTO Payment (date, paymentID, tickets_num, customerID, method, status) 
-                                           VALUES (@date, @paymentId, @ticketsNum, @customerId, @method, @status)";
-
-                    SqlCommand command = new SqlCommand(insertQuery, connection);
-                    command.CommandType = CommandType.Text;
-
-                    command.Parameters.AddWithValue("@date", datePicker.Value.Date);
-                    command.Parameters.AddWithValue("@paymentId", paymentRefTextBox.Text);
-                    command.Parameters.AddWithValue("@ticketsNum", ticketsNumTextBox.Text);
-                    command.Parameters.AddWithValue("@customerId", customerId);
-                    command.Parameters.AddWithValue("@method", method);
-                    command.Parameters.AddWithValue("@status", status);
-
-                    command.ExecuteNonQuery();
-                    connection.Close();
-                }
-
-                MessageBox.Show("Payment added successfully!");
-
-                // Clear fields after insertion
-                datePicker.Value = DateTime.Today;
-                paymentRefTextBox.Text = "";
-                ticketsNumTextBox.Text = "";
-                customerComboBox.SelectedIndex = -1;
-                methodComboBox.SelectedIndex = -1;
-                statusComboBox.SelectedIndex = -1;
-
-                // Refresh data
-                LoadPaymentsData();
-                PopulateComboBoxes();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error inserting payment: " + ex.Message);
-            }
-        }
-
-        private void deleteButton_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (paymentDeleteComboBox.SelectedItem == null)
-                {
-                    MessageBox.Show("Please select a payment to delete.");
-                    return;
-                }
-
-                string paymentId = paymentDeleteComboBox.SelectedItem.ToString();
-
-                // Confirm deletion
-                DialogResult result = MessageBox.Show("Are you sure you want to delete this payment?",
-                                                    "Confirm Deletion",
-                                                    MessageBoxButtons.YesNo,
-                                                    MessageBoxIcon.Warning);
-                if (result == DialogResult.No)
-                    return;
-
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-                    string deleteQuery = "DELETE FROM Payment WHERE payment_ID = @paymentId";
-
-                    SqlCommand command = new SqlCommand(deleteQuery, connection);
-                    command.Parameters.AddWithValue("@paymentId", paymentId);
-
-                    command.ExecuteNonQuery();
-                    connection.Close();
-                }
-
-                MessageBox.Show("Payment deleted successfully!");
-
-                // Refresh data
-                LoadPaymentsData();
-                PopulateComboBoxes();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error deleting payment: " + ex.Message);
-            }
-        }
-
-        private void updateButton_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (paymentUpdateComboBox.SelectedItem == null || fieldComboBox.SelectedItem == null)
-                {
-                    MessageBox.Show("Please select a payment and a field to update.");
-                    return;
-                }
-
-                string paymentId = paymentUpdateComboBox.SelectedItem.ToString();
-                string selectedField = fieldComboBox.SelectedItem.ToString();
-                string dbField = "";
-
-                // Map UI field names to database field names
-                switch (selectedField)
-                {
-                    case "Date": dbField = "date"; break;
-                    case "Payment Reference": dbField = "paymentID"; break;
-                    case "Tickets Number": dbField = "tickets_num"; break;
-                    case "Customer ID": dbField = "customerID"; break;
-                    case "Method": dbField = "method"; break;
-                    case "Status": dbField = "status"; break;
-                    default: dbField = selectedField.ToLower(); break;
-                }
-
-                string newValue = updateValueTextBox.Text;
-
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-                    string updateQuery = $"UPDATE Payment SET {dbField} = @newValue WHERE payment_ID = @paymentId";
-
-                    SqlCommand command = new SqlCommand(updateQuery, connection);
-                    command.Parameters.AddWithValue("@newValue", newValue);
-                    command.Parameters.AddWithValue("@paymentId", paymentId);
-
-                    command.ExecuteNonQuery();
-                    connection.Close();
-                }
-
-                MessageBox.Show("Payment updated successfully!");
-
-                // Clear fields after update
-                paymentUpdateComboBox.SelectedIndex = -1;
-                fieldComboBox.SelectedIndex = -1;
-                updateValueTextBox.Text = "";
-
-                // Refresh data
-                LoadPaymentsData();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error updating payment: " + ex.Message);
+                dataGridView1.AutoResizeColumns(DataGridViewAutoSizeColumnsMode.AllCells);
+                dataGridView1.AlternatingRowsDefaultCellStyle.BackColor = System.Drawing.Color.LightGray;
+                dataGridView1.ReadOnly = true;
             }
         }
 
@@ -295,16 +135,19 @@ namespace WindowsFormsApp1
 
             try
             {
+                if (selectedOption == "All")
+                {
+                    LoadPaymentsData();
+                    return;
+                }
+
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string query;
+                    string filterQuery;
 
-                    if (selectedOption == "All")
-                    {
-                        query = "SELECT payment_ID, date, paymentID, tickets_num, customerID, method, status FROM Payment";
-                    }
-                    else if (selectedOption == "Date")
+                    // Build base query with appropriate filter
+                    if (selectedOption == "Date")
                     {
                         using (Form inputForm = new Form())
                         {
@@ -312,8 +155,8 @@ namespace WindowsFormsApp1
                             inputForm.Height = 150;
                             inputForm.Text = "Filter by Date";
 
-                            Label label = new Label() { Left = 20, Top = 20, Text = "Enter date to filter by (YYYY-MM-DD):" };
-                            TextBox textBox = new TextBox() { Left = 20, Top = 50, Width = 240 };
+                            Label label = new Label() { Left = 20, Top = 20, Text = "Select date:" };
+                            DateTimePicker datePicker = new DateTimePicker() { Left = 20, Top = 50, Width = 240, Format = DateTimePickerFormat.Short };
                             Button confirmButton = new Button() { Text = "OK", Left = 180, Width = 80, Top = 80 };
                             Button cancelButton = new Button() { Text = "Cancel", Left = 90, Width = 80, Top = 80 };
 
@@ -321,17 +164,54 @@ namespace WindowsFormsApp1
                             cancelButton.Click += (s, ev) => { inputForm.DialogResult = DialogResult.Cancel; };
 
                             inputForm.Controls.Add(label);
-                            inputForm.Controls.Add(textBox);
+                            inputForm.Controls.Add(datePicker);
                             inputForm.Controls.Add(confirmButton);
                             inputForm.Controls.Add(cancelButton);
                             inputForm.AcceptButton = confirmButton;
                             inputForm.CancelButton = cancelButton;
 
-                            if (inputForm.ShowDialog() != DialogResult.OK || string.IsNullOrEmpty(textBox.Text))
+                            if (inputForm.ShowDialog() != DialogResult.OK)
                                 return;
 
-                            string date = textBox.Text;
-                            query = $"SELECT payment_ID, date, paymentID, tickets_num, customerID, method, status FROM Payment WHERE CONVERT(date, date) = '{date}'";
+                            string dateFilter = datePicker.Value.ToString("yyyy-MM-dd");
+
+                            filterQuery = @"
+                                    SELECT 
+                                        p.Payment_id, 
+                                        p.Payment_date, 
+                                        p.Payment_method, 
+                                        p.Payment_status, 
+                                        p.Payment_amount,
+                                        COALESCE(tp.TotalTickets, 0) AS Tickets_Count,
+                                        CASE 
+                                            WHEN c.Customer_id IS NULL THEN 'N/A'
+                                            ELSE CONCAT(c.Customer_firstName, ' ', c.Customer_lastName) 
+                                        END AS Customer_Name,
+                                        COALESCE(c.Customer_id, 0) AS Customer_id
+                                    FROM 
+                                        Payment p
+                                    LEFT JOIN (
+                                        SELECT 
+                                            tp.Payment_id, 
+                                            SUM(tp.num_of_tickets) AS TotalTickets,
+                                            MIN(t.Customer_id) AS Customer_id
+                                        FROM 
+                                            TicketPayments tp
+                                        JOIN 
+                                            Ticket t ON tp.Ticket_id = t.Ticket_id
+                                        GROUP BY 
+                                            tp.Payment_id
+                                    ) AS tp ON p.Payment_id = tp.Payment_id
+                                    LEFT JOIN 
+                                        Customer c ON tp.Customer_id = c.Customer_id
+                                    WHERE 
+                                        CONVERT(date, p.Payment_date) = @dateFilter
+                                    ORDER BY 
+                                        p.Payment_date DESC";
+
+                            SqlCommand command = new SqlCommand(filterQuery, connection);
+                            command.Parameters.AddWithValue("@dateFilter", dateFilter);
+                            FilterAndPopulateData(command);
                         }
                     }
                     else if (selectedOption == "Status")
@@ -342,8 +222,13 @@ namespace WindowsFormsApp1
                             inputForm.Height = 150;
                             inputForm.Text = "Filter by Status";
 
-                            Label label = new Label() { Left = 20, Top = 20, Text = "Enter status to filter by (Completed/Pending/Failed):" };
-                            TextBox textBox = new TextBox() { Left = 20, Top = 50, Width = 240 };
+                            Label label = new Label() { Left = 20, Top = 20, Text = "Select payment status:" };
+                            ComboBox statusCombo = new ComboBox() { Left = 20, Top = 50, Width = 240 };
+                            statusCombo.Items.Add("Completed");
+                            statusCombo.Items.Add("Pending");
+                            statusCombo.DropDownStyle = ComboBoxStyle.DropDownList;
+                            statusCombo.SelectedIndex = 0; // Default to "Completed"
+
                             Button confirmButton = new Button() { Text = "OK", Left = 180, Width = 80, Top = 80 };
                             Button cancelButton = new Button() { Text = "Cancel", Left = 90, Width = 80, Top = 80 };
 
@@ -351,17 +236,54 @@ namespace WindowsFormsApp1
                             cancelButton.Click += (s, ev) => { inputForm.DialogResult = DialogResult.Cancel; };
 
                             inputForm.Controls.Add(label);
-                            inputForm.Controls.Add(textBox);
+                            inputForm.Controls.Add(statusCombo);
                             inputForm.Controls.Add(confirmButton);
                             inputForm.Controls.Add(cancelButton);
                             inputForm.AcceptButton = confirmButton;
                             inputForm.CancelButton = cancelButton;
 
-                            if (inputForm.ShowDialog() != DialogResult.OK || string.IsNullOrEmpty(textBox.Text))
+                            if (inputForm.ShowDialog() != DialogResult.OK || statusCombo.SelectedItem == null)
                                 return;
 
-                            string status = textBox.Text;
-                            query = $"SELECT payment_ID, date, paymentID, tickets_num, customerID, method, status FROM Payment WHERE status = '{status}'";
+                            bool statusValue = statusCombo.SelectedItem.ToString() == "Completed" ? true : false;
+
+                            filterQuery = @"
+                                    SELECT 
+                                        p.Payment_id, 
+                                        p.Payment_date, 
+                                        p.Payment_method, 
+                                        p.Payment_status, 
+                                        p.Payment_amount,
+                                        COALESCE(tp.TotalTickets, 0) AS Tickets_Count,
+                                        CASE 
+                                            WHEN c.Customer_id IS NULL THEN 'N/A'
+                                            ELSE CONCAT(c.Customer_firstName, ' ', c.Customer_lastName) 
+                                        END AS Customer_Name,
+                                        COALESCE(c.Customer_id, 0) AS Customer_id
+                                    FROM 
+                                        Payment p
+                                    LEFT JOIN (
+                                        SELECT 
+                                            tp.Payment_id, 
+                                            SUM(tp.num_of_tickets) AS TotalTickets,
+                                            MIN(t.Customer_id) AS Customer_id
+                                        FROM 
+                                            TicketPayments tp
+                                        JOIN 
+                                            Ticket t ON tp.Ticket_id = t.Ticket_id
+                                        GROUP BY 
+                                            tp.Payment_id
+                                    ) AS tp ON p.Payment_id = tp.Payment_id
+                                    LEFT JOIN 
+                                        Customer c ON tp.Customer_id = c.Customer_id
+                                    WHERE 
+                                        p.Payment_status = @status
+                                    ORDER BY 
+                                        p.Payment_date DESC";
+
+                            SqlCommand command = new SqlCommand(filterQuery, connection);
+                            command.Parameters.AddWithValue("@status", statusValue);
+                            FilterAndPopulateData(command);
                         }
                     }
                     else if (selectedOption == "Method")
@@ -372,8 +294,16 @@ namespace WindowsFormsApp1
                             inputForm.Height = 150;
                             inputForm.Text = "Filter by Method";
 
-                            Label label = new Label() { Left = 20, Top = 20, Text = "Enter payment method:" };
-                            TextBox textBox = new TextBox() { Left = 20, Top = 50, Width = 240 };
+                            Label label = new Label() { Left = 20, Top = 20, Text = "Select payment method:" };
+                            ComboBox methodCombo = new ComboBox() { Left = 20, Top = 50, Width = 240 };
+                            methodCombo.Items.Add("Credit Card");
+                            methodCombo.Items.Add("Debit Card");
+                            methodCombo.Items.Add("Cash");
+                            methodCombo.Items.Add("Mobile Payment");
+                            methodCombo.Items.Add("Online Transfer");
+                            methodCombo.DropDownStyle = ComboBoxStyle.DropDownList;
+                            methodCombo.SelectedIndex = 0; // Default to "Credit Card"
+
                             Button confirmButton = new Button() { Text = "OK", Left = 180, Width = 80, Top = 80 };
                             Button cancelButton = new Button() { Text = "Cancel", Left = 90, Width = 80, Top = 80 };
 
@@ -381,29 +311,85 @@ namespace WindowsFormsApp1
                             cancelButton.Click += (s, ev) => { inputForm.DialogResult = DialogResult.Cancel; };
 
                             inputForm.Controls.Add(label);
-                            inputForm.Controls.Add(textBox);
+                            inputForm.Controls.Add(methodCombo);
                             inputForm.Controls.Add(confirmButton);
                             inputForm.Controls.Add(cancelButton);
                             inputForm.AcceptButton = confirmButton;
                             inputForm.CancelButton = cancelButton;
 
-                            if (inputForm.ShowDialog() != DialogResult.OK || string.IsNullOrEmpty(textBox.Text))
+                            if (inputForm.ShowDialog() != DialogResult.OK || methodCombo.SelectedItem == null)
                                 return;
 
-                            string method = textBox.Text;
-                            query = $"SELECT payment_ID, date, paymentID, tickets_num, customerID, method, status FROM Payment WHERE method = '{method}'";
+                            string method = methodCombo.SelectedItem.ToString();
+
+                            filterQuery = @"
+                                    SELECT 
+                                        p.Payment_id, 
+                                        p.Payment_date, 
+                                        p.Payment_method, 
+                                        p.Payment_status, 
+                                        p.Payment_amount,
+                                        COALESCE(tp.TotalTickets, 0) AS Tickets_Count,
+                                        CASE 
+                                            WHEN c.Customer_id IS NULL THEN 'N/A'
+                                            ELSE CONCAT(c.Customer_firstName, ' ', c.Customer_lastName) 
+                                        END AS Customer_Name,
+                                        COALESCE(c.Customer_id, 0) AS Customer_id
+                                    FROM 
+                                        Payment p
+                                    LEFT JOIN (
+                                        SELECT 
+                                            tp.Payment_id, 
+                                            SUM(tp.num_of_tickets) AS TotalTickets,
+                                            MIN(t.Customer_id) AS Customer_id
+                                        FROM 
+                                            TicketPayments tp
+                                        JOIN 
+                                            Ticket t ON tp.Ticket_id = t.Ticket_id
+                                        GROUP BY 
+                                            tp.Payment_id
+                                    ) AS tp ON p.Payment_id = tp.Payment_id
+                                    LEFT JOIN 
+                                        Customer c ON tp.Customer_id = c.Customer_id
+                                    WHERE 
+                                        p.Payment_method = @method
+                                    ORDER BY 
+                                        p.Payment_date DESC";
+
+                            SqlCommand command = new SqlCommand(filterQuery, connection);
+                            command.Parameters.AddWithValue("@method", method);
+                            FilterAndPopulateData(command);
                         }
                     }
                     else if (selectedOption == "Customer")
                     {
+                        // Get list of customers
+                        SqlDataAdapter customersAdapter = new SqlDataAdapter(
+                            "SELECT Customer_id, Customer_firstName + ' ' + Customer_lastName AS FullName FROM Customer ORDER BY FullName",
+                            connection);
+                        DataTable customersTable = new DataTable();
+                        customersAdapter.Fill(customersTable);
+
                         using (Form inputForm = new Form())
                         {
                             inputForm.Width = 300;
                             inputForm.Height = 150;
                             inputForm.Text = "Filter by Customer";
 
-                            Label label = new Label() { Left = 20, Top = 20, Text = "Enter customer ID:" };
-                            TextBox textBox = new TextBox() { Left = 20, Top = 50, Width = 240 };
+                            Label label = new Label() { Left = 20, Top = 20, Text = "Select customer:" };
+                            ComboBox customerCombo = new ComboBox() { Left = 20, Top = 50, Width = 240, DropDownStyle = ComboBoxStyle.DropDownList };
+
+                            foreach (DataRow row in customersTable.Rows)
+                            {
+                                customerCombo.Items.Add(new KeyValuePair<int, string>(
+                                    Convert.ToInt32(row["Customer_id"]),
+                                    row["FullName"].ToString()
+                                ));
+                            }
+
+                            customerCombo.DisplayMember = "Value";
+                            customerCombo.ValueMember = "Key";
+
                             Button confirmButton = new Button() { Text = "OK", Left = 180, Width = 80, Top = 80 };
                             Button cancelButton = new Button() { Text = "Cancel", Left = 90, Width = 80, Top = 80 };
 
@@ -411,68 +397,121 @@ namespace WindowsFormsApp1
                             cancelButton.Click += (s, ev) => { inputForm.DialogResult = DialogResult.Cancel; };
 
                             inputForm.Controls.Add(label);
-                            inputForm.Controls.Add(textBox);
+                            inputForm.Controls.Add(customerCombo);
                             inputForm.Controls.Add(confirmButton);
                             inputForm.Controls.Add(cancelButton);
                             inputForm.AcceptButton = confirmButton;
                             inputForm.CancelButton = cancelButton;
 
-                            if (inputForm.ShowDialog() != DialogResult.OK || string.IsNullOrEmpty(textBox.Text))
+                            if (inputForm.ShowDialog() != DialogResult.OK || customerCombo.SelectedItem == null)
                                 return;
 
-                            string customerId = textBox.Text;
-                            query = $"SELECT payment_ID, date, paymentID, tickets_num, customerID, method, status FROM Payment WHERE customerID = {customerId}";
+                            KeyValuePair<int, string> selectedCustomer = (KeyValuePair<int, string>)customerCombo.SelectedItem;
+                            int customerId = selectedCustomer.Key;
+
+                            filterQuery = @"
+                                    SELECT 
+                                        p.Payment_id, 
+                                        p.Payment_date, 
+                                        p.Payment_method, 
+                                        p.Payment_status, 
+                                        p.Payment_amount,
+                                        COALESCE(tp.TotalTickets, 0) AS Tickets_Count,
+                                        CASE 
+                                            WHEN c.Customer_id IS NULL THEN 'N/A'
+                                            ELSE CONCAT(c.Customer_firstName, ' ', c.Customer_lastName) 
+                                        END AS Customer_Name,
+                                        COALESCE(c.Customer_id, 0) AS Customer_id
+                                    FROM 
+                                        Payment p
+                                    JOIN 
+                                        TicketPayments tp1 ON p.Payment_id = tp1.Payment_id
+                                    JOIN 
+                                        Ticket t ON tp1.Ticket_id = t.Ticket_id
+                                    LEFT JOIN (
+                                        SELECT 
+                                            tp2.Payment_id, 
+                                            SUM(tp2.num_of_tickets) AS TotalTickets,
+                                            MIN(t2.Customer_id) AS Customer_id
+                                        FROM 
+                                            TicketPayments tp2
+                                        JOIN 
+                                            Ticket t2 ON tp2.Ticket_id = t2.Ticket_id
+                                        GROUP BY 
+                                            tp2.Payment_id
+                                    ) AS tp ON p.Payment_id = tp.Payment_id
+                                    LEFT JOIN 
+                                        Customer c ON tp.Customer_id = c.Customer_id
+                                    WHERE 
+                                        t.Customer_id = @customerId
+                                    ORDER BY 
+                                        p.Payment_date DESC";
+
+                            SqlCommand command = new SqlCommand(filterQuery, connection);
+                            command.Parameters.AddWithValue("@customerId", customerId);
+                            FilterAndPopulateData(command);
                         }
                     }
-                    else
-                    {
-                        return;
-                    }
-
-                    SqlCommand command = new SqlCommand(query, connection);
-                    SqlDataReader reader = command.ExecuteReader();
-
-                    DataTable table = new DataTable();
-                    table.Columns.Add("Payment ID");
-                    table.Columns.Add("Date");
-                    table.Columns.Add("Payment Reference");
-                    table.Columns.Add("Tickets Number");
-                    table.Columns.Add("Customer ID");
-                    table.Columns.Add("Method");
-                    table.Columns.Add("Status");
-
-                    while (reader.Read())
-                    {
-                        DataRow row = table.NewRow();
-                        row["Payment ID"] = reader["payment_ID"];
-                        row["Date"] = reader["date"];
-                        row["Payment Reference"] = reader["paymentID"];
-                        row["Tickets Number"] = reader["tickets_num"];
-                        row["Customer ID"] = reader["customerID"];
-                        row["Method"] = reader["method"];
-                        row["Status"] = reader["status"];
-                        table.Rows.Add(row);
-                    }
-
-                    reader.Close();
-                    dataGridView1.DataSource = table;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error filtering data: " + ex.Message);
+                MessageBox.Show("Error filtering data: " + ex.Message, "Filter Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void FilterAndPopulateData(SqlCommand command)
+        {
+            try
+            {
+                SqlDataReader reader = command.ExecuteReader();
+
+                DataTable table = new DataTable();
+                table.Columns.Add("Payment ID");
+                table.Columns.Add("Date");
+                table.Columns.Add("Method");
+                table.Columns.Add("Status");
+                table.Columns.Add("Amount");
+                table.Columns.Add("Tickets Count");
+                table.Columns.Add("Customer");
+                table.Columns.Add("Customer ID");
+
+                while (reader.Read())
+                {
+                    DataRow row = table.NewRow();
+                    row["Payment ID"] = reader["Payment_id"];
+                    row["Date"] = Convert.ToDateTime(reader["Payment_date"]).ToString("yyyy-MM-dd HH:mm:ss");
+                    row["Method"] = reader["Payment_method"];
+                    row["Status"] = Convert.ToBoolean(reader["Payment_status"]) ? "Completed" : "Pending";
+                    row["Amount"] = string.Format("{0:C}", reader["Payment_amount"]);
+                    row["Tickets Count"] = reader["Tickets_Count"];
+                    row["Customer"] = reader["Customer_Name"];
+                    row["Customer ID"] = reader["Customer_id"];
+                    table.Rows.Add(row);
+                }
+
+                reader.Close();
+                dataGridView1.DataSource = table;
+
+                // Format the DataGridView
+                FormatDataGridView();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error filtering data: " + ex.Message, "Filter Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void refreshButton_Click(object sender, EventArgs e)
         {
             LoadPaymentsData();
-            PopulateComboBoxes();
         }
 
         private void backButton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            dashboard d = new dashboard();
+            d.Show();
+            this.Hide();
         }
     }
 }

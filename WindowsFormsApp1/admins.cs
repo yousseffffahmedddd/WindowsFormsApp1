@@ -8,7 +8,7 @@ namespace WindowsFormsApp1
     public partial class admins : Form
     {
         // Connection string for database
-        private string connectionString = "Data Source=DESKTOP-JDD3HCC\\MSSQLSERVER01;Initial Catalog=cinema_DB;Integrated Security=True;";
+        private string connectionString = "Data Source=DESKTOP-JDD3HCC\\MSSQLSERVER01;Initial Catalog=CinemaDB;Integrated Security=True;";
 
         public admins()
         {

@@ -33,6 +33,9 @@ namespace WindowsFormsApp1
         {
             this.label1 = new System.Windows.Forms.Label();
             this.insertionPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
+            this.label15 = new System.Windows.Forms.Label();
+            this.hall_combobox = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.label7 = new System.Windows.Forms.Label();
             this.adminManagerComboBox = new System.Windows.Forms.ComboBox();
@@ -75,6 +78,7 @@ namespace WindowsFormsApp1
             this.hallIdPanel = new System.Windows.Forms.TableLayoutPanel();
             this.hallIdLabel = new System.Windows.Forms.Label();
             this.insertionPanel.SuspendLayout();
+            this.tableLayoutPanel5.SuspendLayout();
             this.tableLayoutPanel4.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -108,26 +112,67 @@ namespace WindowsFormsApp1
             this.insertionPanel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.insertionPanel.ColumnCount = 1;
             this.insertionPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.insertionPanel.Controls.Add(this.tableLayoutPanel5, 0, 5);
             this.insertionPanel.Controls.Add(this.tableLayoutPanel4, 0, 4);
             this.insertionPanel.Controls.Add(this.tableLayoutPanel3, 0, 3);
             this.insertionPanel.Controls.Add(this.tableLayoutPanel2, 0, 2);
             this.insertionPanel.Controls.Add(this.tableLayoutPanel1, 0, 1);
-            this.insertionPanel.Controls.Add(this.insertButton, 0, 5);
             this.insertionPanel.Controls.Add(this.label1, 0, 0);
+            this.insertionPanel.Controls.Add(this.insertButton, 0, 7);
             this.insertionPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.insertionPanel.Location = new System.Drawing.Point(39, 108);
             this.insertionPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.insertionPanel.Name = "insertionPanel";
             this.insertionPanel.Padding = new System.Windows.Forms.Padding(15);
-            this.insertionPanel.RowCount = 6;
+            this.insertionPanel.RowCount = 8;
             this.insertionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.insertionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.insertionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.insertionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.insertionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.insertionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.insertionPanel.Size = new System.Drawing.Size(441, 378);
+            this.insertionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 47F));
+            this.insertionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 14F));
+            this.insertionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 39F));
+            this.insertionPanel.Size = new System.Drawing.Size(441, 506);
             this.insertionPanel.TabIndex = 1;
+            // 
+            // tableLayoutPanel5
+            // 
+            this.tableLayoutPanel5.ColumnCount = 2;
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 30F));
+            this.tableLayoutPanel5.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 70F));
+            this.tableLayoutPanel5.Controls.Add(this.label15, 0, 0);
+            this.tableLayoutPanel5.Controls.Add(this.hall_combobox, 1, 0);
+            this.tableLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tableLayoutPanel5.Location = new System.Drawing.Point(18, 317);
+            this.tableLayoutPanel5.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tableLayoutPanel5.Name = "tableLayoutPanel5";
+            this.tableLayoutPanel5.RowCount = 1;
+            this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(405, 43);
+            this.tableLayoutPanel5.TabIndex = 19;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label15.Location = new System.Drawing.Point(3, 0);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(115, 43);
+            this.label15.TabIndex = 4;
+            this.label15.Text = "Hall";
+            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label15.UseCompatibleTextRendering = true;
+            // 
+            // hall_combobox
+            // 
+            this.hall_combobox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.hall_combobox.FormattingEnabled = true;
+            this.hall_combobox.Location = new System.Drawing.Point(124, 2);
+            this.hall_combobox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.hall_combobox.Name = "hall_combobox";
+            this.hall_combobox.Size = new System.Drawing.Size(278, 37);
+            this.hall_combobox.TabIndex = 5;
             // 
             // tableLayoutPanel4
             // 
@@ -277,7 +322,7 @@ namespace WindowsFormsApp1
             // 
             // insertButton
             // 
-            this.insertButton.Location = new System.Drawing.Point(18, 317);
+            this.insertButton.Location = new System.Drawing.Point(18, 378);
             this.insertButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.insertButton.Name = "insertButton";
             this.insertButton.Size = new System.Drawing.Size(405, 50);
@@ -308,7 +353,7 @@ namespace WindowsFormsApp1
             this.deletePanel.Controls.Add(this.deleteButton, 0, 3);
             this.deletePanel.Controls.Add(this.label12, 0, 4);
             this.deletePanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.deletePanel.Location = new System.Drawing.Point(39, 505);
+            this.deletePanel.Location = new System.Drawing.Point(503, 527);
             this.deletePanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.deletePanel.Name = "deletePanel";
             this.deletePanel.Padding = new System.Windows.Forms.Padding(15);
@@ -384,10 +429,10 @@ namespace WindowsFormsApp1
             this.backButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonShadow;
             this.backButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.backButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.backButton.Location = new System.Drawing.Point(39, 821);
+            this.backButton.Location = new System.Drawing.Point(39, 744);
             this.backButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.backButton.Name = "backButton";
-            this.backButton.Size = new System.Drawing.Size(441, 82);
+            this.backButton.Size = new System.Drawing.Size(436, 82);
             this.backButton.TabIndex = 5;
             this.backButton.Text = "Back to dashboard";
             this.backButton.UseVisualStyleBackColor = false;
@@ -505,8 +550,11 @@ namespace WindowsFormsApp1
             this.fieldComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.fieldComboBox.FormattingEnabled = true;
             this.fieldComboBox.Items.AddRange(new object[] {
-            "End Time",
-            "Admin Manager"});
+            "Show_start",
+            "Show_end",
+            "Hall_id",
+            "Admin_id",
+            "Show_date"});
             this.fieldComboBox.Location = new System.Drawing.Point(207, 2);
             this.fieldComboBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.fieldComboBox.Name = "fieldComboBox";
@@ -564,15 +612,15 @@ namespace WindowsFormsApp1
             // viewPanel
             // 
             this.viewPanel.ColumnCount = 2;
-            this.viewPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 41.59292F));
-            this.viewPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 58.40708F));
+            this.viewPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 45.78834F));
+            this.viewPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 54.21166F));
             this.viewPanel.Controls.Add(this.label13, 0, 0);
             this.viewPanel.Controls.Add(this.viewByComboBox, 1, 0);
-            this.viewPanel.Location = new System.Drawing.Point(1189, 768);
+            this.viewPanel.Location = new System.Drawing.Point(1374, 765);
             this.viewPanel.Name = "viewPanel";
             this.viewPanel.RowCount = 1;
             this.viewPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.viewPanel.Size = new System.Drawing.Size(565, 61);
+            this.viewPanel.Size = new System.Drawing.Size(510, 61);
             this.viewPanel.TabIndex = 17;
             // 
             // label13
@@ -582,7 +630,7 @@ namespace WindowsFormsApp1
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
             this.label13.Location = new System.Drawing.Point(3, 29);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(228, 32);
+            this.label13.Size = new System.Drawing.Size(227, 32);
             this.label13.TabIndex = 16;
             this.label13.Text = "Show Shows by:";
             // 
@@ -594,9 +642,9 @@ namespace WindowsFormsApp1
             "All",
             "Date",
             "Admin"});
-            this.viewByComboBox.Location = new System.Drawing.Point(237, 30);
+            this.viewByComboBox.Location = new System.Drawing.Point(236, 30);
             this.viewByComboBox.Name = "viewByComboBox";
-            this.viewByComboBox.Size = new System.Drawing.Size(325, 28);
+            this.viewByComboBox.Size = new System.Drawing.Size(271, 28);
             this.viewByComboBox.TabIndex = 15;
             this.viewByComboBox.SelectedIndexChanged += new System.EventHandler(this.viewByComboBox_SelectedIndexChanged);
             // 
@@ -616,9 +664,9 @@ namespace WindowsFormsApp1
             this.refreshButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.refreshButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
             this.refreshButton.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.refreshButton.Location = new System.Drawing.Point(503, 505);
+            this.refreshButton.Location = new System.Drawing.Point(1003, 780);
             this.refreshButton.Name = "refreshButton";
-            this.refreshButton.Size = new System.Drawing.Size(436, 60);
+            this.refreshButton.Size = new System.Drawing.Size(345, 60);
             this.refreshButton.TabIndex = 19;
             this.refreshButton.Text = "Refresh Data";
             this.refreshButton.UseVisualStyleBackColor = false;
@@ -682,6 +730,8 @@ namespace WindowsFormsApp1
             this.Load += new System.EventHandler(this.ShowForm_Load);
             this.insertionPanel.ResumeLayout(false);
             this.insertionPanel.PerformLayout();
+            this.tableLayoutPanel5.ResumeLayout(false);
+            this.tableLayoutPanel5.PerformLayout();
             this.tableLayoutPanel4.ResumeLayout(false);
             this.tableLayoutPanel4.PerformLayout();
             this.tableLayoutPanel3.ResumeLayout(false);
@@ -758,5 +808,8 @@ namespace WindowsFormsApp1
         private System.Windows.Forms.ComboBox hallIdComboBox;
         private System.Windows.Forms.TableLayoutPanel hallIdPanel;
         private System.Windows.Forms.Label hallIdLabel;
+        private TableLayoutPanel tableLayoutPanel5;
+        private Label label15;
+        private ComboBox hall_combobox;
     }
 }

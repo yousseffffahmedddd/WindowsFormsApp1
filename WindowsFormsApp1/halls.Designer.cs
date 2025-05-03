@@ -113,7 +113,7 @@ namespace WindowsFormsApp1
             this.insertionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.insertionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.insertionPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.insertionPanel.Size = new System.Drawing.Size(441, 259);
+            this.insertionPanel.Size = new System.Drawing.Size(441, 293);
             this.insertionPanel.TabIndex = 1;
             // 
             // tableLayoutPanel2
@@ -192,7 +192,8 @@ namespace WindowsFormsApp1
             // 
             // insertButton
             // 
-            this.insertButton.Location = new System.Drawing.Point(18, 197);
+            this.insertButton.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.insertButton.Location = new System.Drawing.Point(18, 231);
             this.insertButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.insertButton.Name = "insertButton";
             this.insertButton.Size = new System.Drawing.Size(405, 45);
@@ -223,7 +224,7 @@ namespace WindowsFormsApp1
             this.deletePanel.Controls.Add(this.deleteButton, 0, 3);
             this.deletePanel.Controls.Add(this.label11, 0, 4);
             this.deletePanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.deletePanel.Location = new System.Drawing.Point(39, 528);
+            this.deletePanel.Location = new System.Drawing.Point(39, 454);
             this.deletePanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.deletePanel.Name = "deletePanel";
             this.deletePanel.Padding = new System.Windows.Forms.Padding(15);
@@ -299,7 +300,7 @@ namespace WindowsFormsApp1
             this.backButton.FlatAppearance.BorderColor = System.Drawing.SystemColors.ButtonShadow;
             this.backButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.backButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.backButton.Location = new System.Drawing.Point(39, 848);
+            this.backButton.Location = new System.Drawing.Point(39, 809);
             this.backButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.backButton.Name = "backButton";
             this.backButton.Size = new System.Drawing.Size(441, 82);
@@ -331,7 +332,7 @@ namespace WindowsFormsApp1
             this.updatePanel.Controls.Add(this.label10, 0, 0);
             this.updatePanel.Controls.Add(this.label12, 0, 2);
             this.updatePanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.updatePanel.Location = new System.Drawing.Point(503, 108);
+            this.updatePanel.Location = new System.Drawing.Point(528, 108);
             this.updatePanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.updatePanel.Name = "updatePanel";
             this.updatePanel.Padding = new System.Windows.Forms.Padding(15);
@@ -341,7 +342,7 @@ namespace WindowsFormsApp1
             this.updatePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 49F));
             this.updatePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.updatePanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 54F));
-            this.updatePanel.Size = new System.Drawing.Size(436, 259);
+            this.updatePanel.Size = new System.Drawing.Size(432, 293);
             this.updatePanel.TabIndex = 11;
             // 
             // tableLayoutPanel6
@@ -358,7 +359,7 @@ namespace WindowsFormsApp1
             this.tableLayoutPanel6.RowCount = 1;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 62F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(400, 62);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(396, 62);
             this.tableLayoutPanel6.TabIndex = 22;
             // 
             // label16
@@ -367,7 +368,7 @@ namespace WindowsFormsApp1
             this.label16.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label16.Location = new System.Drawing.Point(3, 0);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(198, 62);
+            this.label16.Size = new System.Drawing.Size(196, 62);
             this.label16.TabIndex = 4;
             this.label16.Text = "Select Hall";
             this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -377,10 +378,10 @@ namespace WindowsFormsApp1
             // 
             this.hallUpdateComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.hallUpdateComboBox.FormattingEnabled = true;
-            this.hallUpdateComboBox.Location = new System.Drawing.Point(207, 2);
+            this.hallUpdateComboBox.Location = new System.Drawing.Point(205, 2);
             this.hallUpdateComboBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.hallUpdateComboBox.Name = "hallUpdateComboBox";
-            this.hallUpdateComboBox.Size = new System.Drawing.Size(190, 40);
+            this.hallUpdateComboBox.Size = new System.Drawing.Size(188, 40);
             this.hallUpdateComboBox.TabIndex = 5;
             // 
             // updateValueTextBox
@@ -389,7 +390,7 @@ namespace WindowsFormsApp1
             this.updateValueTextBox.Location = new System.Drawing.Point(18, 181);
             this.updateValueTextBox.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.updateValueTextBox.Name = "updateValueTextBox";
-            this.updateValueTextBox.Size = new System.Drawing.Size(400, 39);
+            this.updateValueTextBox.Size = new System.Drawing.Size(396, 39);
             this.updateValueTextBox.TabIndex = 21;
             // 
             // updateButton
@@ -399,10 +400,10 @@ namespace WindowsFormsApp1
             this.updateButton.FlatAppearance.BorderSize = 0;
             this.updateButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.updateButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
-            this.updateButton.Location = new System.Drawing.Point(18, 222);
+            this.updateButton.Location = new System.Drawing.Point(18, 227);
             this.updateButton.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.updateButton.Name = "updateButton";
-            this.updateButton.Size = new System.Drawing.Size(400, 49);
+            this.updateButton.Size = new System.Drawing.Size(396, 49);
             this.updateButton.TabIndex = 9;
             this.updateButton.Text = "Update Capacity";
             this.updateButton.UseVisualStyleBackColor = false;
@@ -416,7 +417,7 @@ namespace WindowsFormsApp1
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F);
             this.label10.Location = new System.Drawing.Point(18, 15);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(400, 49);
+            this.label10.Size = new System.Drawing.Size(396, 49);
             this.label10.TabIndex = 0;
             this.label10.Text = "Update Hall";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -427,7 +428,7 @@ namespace WindowsFormsApp1
             this.label12.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.label12.Location = new System.Drawing.Point(18, 147);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(400, 32);
+            this.label12.Size = new System.Drawing.Size(396, 32);
             this.label12.TabIndex = 23;
             this.label12.Text = "New Capacity";
             // 
@@ -447,9 +448,9 @@ namespace WindowsFormsApp1
             this.refreshButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.refreshButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F);
             this.refreshButton.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.refreshButton.Location = new System.Drawing.Point(503, 528);
+            this.refreshButton.Location = new System.Drawing.Point(528, 809);
             this.refreshButton.Name = "refreshButton";
-            this.refreshButton.Size = new System.Drawing.Size(436, 60);
+            this.refreshButton.Size = new System.Drawing.Size(432, 82);
             this.refreshButton.TabIndex = 19;
             this.refreshButton.Text = "Refresh Data";
             this.refreshButton.UseVisualStyleBackColor = false;
@@ -467,7 +468,7 @@ namespace WindowsFormsApp1
             this.seatsPanel.Controls.Add(this.addSeatButton, 0, 3);
             this.seatsPanel.Controls.Add(this.label13, 0, 0);
             this.seatsPanel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.seatsPanel.Location = new System.Drawing.Point(503, 386);
+            this.seatsPanel.Location = new System.Drawing.Point(524, 454);
             this.seatsPanel.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.seatsPanel.Name = "seatsPanel";
             this.seatsPanel.Padding = new System.Windows.Forms.Padding(15);
@@ -476,7 +477,7 @@ namespace WindowsFormsApp1
             this.seatsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.seatsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
             this.seatsPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 60F));
-            this.seatsPanel.Size = new System.Drawing.Size(436, 259);
+            this.seatsPanel.Size = new System.Drawing.Size(436, 299);
             this.seatsPanel.TabIndex = 20;
             // 
             // tableLayoutPanel3

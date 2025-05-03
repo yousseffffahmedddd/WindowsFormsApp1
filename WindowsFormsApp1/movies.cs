@@ -15,9 +15,12 @@ namespace WindowsFormsApp1
 {
     public partial class movies : Form
     {
+        private string connectionString = "Data Source=DESKTOP-JDD3HCC\\MSSQLSERVER01;Initial Catalog=cinema_DB;Integrated Security=True;";
+
         public movies()
         {
             InitializeComponent();
+            populate_combobox();
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -67,7 +70,9 @@ namespace WindowsFormsApp1
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            dashboard d = new dashboard();
+            d.Show();
+            this.Hide();
         }
 
         private void insertionAndUpdateTable_Paint(object sender, PaintEventArgs e)
@@ -77,27 +82,16 @@ namespace WindowsFormsApp1
 
         private void OK_Click(object sender, EventArgs e)
         {
-            //SqlConnection connection = new SqlConnection("Data Source=DESKTOP-R2SLAOP\\SQLEXPRESS;Initial Catalog=Cinema_ticket_booking_system;Integrated Security=True");
-            //connection.Open();
-
-            //string updatestr = @"update Admin set Admin_email=@email where Admin_id=4";
-            //SqlCommand command = new SqlCommand(updatestr, connection);
-            //command.CommandType = CommandType.Text;
-            //SqlParameter email = new SqlParameter("email", textBox2.Text);
-            //command.Parameters.Add(email);
-            //command.ExecuteNonQuery();
-            //connection.Close();
-            //MessageBox.Show("succses update");
 
 
-            SqlConnection connection = new SqlConnection("Data Source=DESKTOP-R2SLAOP\\SQLEXPRESS;Initial Catalog=Cinema_ticket_booking_system;Integrated Security=True");
+
+            SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
 
 
-            string insertstr = @"insert into Movies (Mov_name, Mov_rating, Mov_duration, Mov_category, Mov_year, Mov_language, Mov_minAge, Mov_cast) values(@Mov_name, @Mov_rating, @Mov_duration, @Mov_category, @Mov_year, @Mov_language, @Mov_minAge, @Mov_cast);";
+            string insertstr = @"insert into Movies (Mov_name, Mov_rating, Mov_duration, Mov_category, Mov_year, Mov_language, Mov_minAge, Mov_cast_members,Mov_cast_roles,Admin_id) values(@Mov_name, @Mov_rating, @Mov_duration, @Mov_category, @Mov_year, @Mov_language, @Mov_minAge, @Mov_cast_members,@Mov_cast_roles,@Admin_id);";
             SqlCommand command = new SqlCommand(insertstr, connection);
             command.CommandType = CommandType.Text;
-
             SqlParameter Mov_name = new SqlParameter("Mov_name", textBox1.Text);
             SqlParameter Mov_rating = new SqlParameter("Mov_rating", maskedTextBox2.Text);
             SqlParameter Mov_duration = new SqlParameter("Mov_duration", maskedTextBox3.Text);
@@ -105,7 +99,9 @@ namespace WindowsFormsApp1
             SqlParameter Mov_year = new SqlParameter("Mov_year", maskedTextBox4.Text);
             SqlParameter Mov_language = new SqlParameter("Mov_language", textBox4.Text);
             SqlParameter Mov_minAge = new SqlParameter("Mov_minAge", maskedTextBox5.Text);
-            SqlParameter Mov_cast = new SqlParameter("Mov_cast", richTextBox1.Text);
+            SqlParameter Mov_cast_members = new SqlParameter("Mov_cast_members", richTextBox1.Text);
+            SqlParameter Mov_cast_roles = new SqlParameter("Mov_cast_roles", richTextBox1.Text);
+            SqlParameter Admin_id = new SqlParameter("Admin_id", textBox2.Text);
             command.Parameters.Add(Mov_name);
             command.Parameters.Add(Mov_rating);
             command.Parameters.Add(Mov_duration);
@@ -113,7 +109,9 @@ namespace WindowsFormsApp1
             command.Parameters.Add(Mov_year);
             command.Parameters.Add(Mov_language);
             command.Parameters.Add(Mov_minAge);
-            command.Parameters.Add(Mov_cast);
+            command.Parameters.Add(Mov_cast_members);
+            command.Parameters.Add(Mov_cast_roles);
+            command.Parameters.Add(Admin_id);
             command.ExecuteNonQuery();
             connection.Close();
 
@@ -127,43 +125,7 @@ namespace WindowsFormsApp1
 
         private void ShowMovies_Click(object sender, EventArgs e)
         {
-            this.WindowState = FormWindowState.Maximized;
-            SqlConnection connection = new SqlConnection("Data Source=DESKTOP-R2SLAOP\\SQLEXPRESS;Initial Catalog=Cinema_ticket_booking_system;Integrated Security=True;");
-            connection.Open();
-            string showmoviesStr = @"select * from Movies";
-            SqlCommand command = new SqlCommand(showmoviesStr, connection);
-            command.CommandType = CommandType.Text;
-            SqlDataReader reader = command.ExecuteReader();
-            DataTable table = new DataTable();
-            table.Columns.Add("Movie_id");
-            table.Columns.Add("Mov_name");
-            table.Columns.Add("Mov_rating");
-            table.Columns.Add("Mov_duration");
-            table.Columns.Add("Mov_category");
-            table.Columns.Add("Mov_language");
-            table.Columns.Add("Mov_minAge");
-            table.Columns.Add("Mov_year");
-            table.Columns.Add("Mov_cast");
-            DataRow row;
-            while (reader.Read())
-            {
-                row = table.NewRow();
-                row["Movie_id"] = reader["Movie_id"];
-                row["Mov_name"] = reader["Mov_name"];
-                row["Mov_rating"] = reader["Mov_rating"];
-                row["Mov_duration"] = reader["Mov_duration"];
-                row["Mov_category"] = reader["Mov_category"];
-                row["Mov_language"] = reader["Mov_language"];
-                row["Mov_minAge"] = reader["Mov_minAge"];
-                row["Mov_year"] = reader["Mov_year"];
-                row["Mov_cast"] = reader["Mov_cast"];
 
-                table.Rows.Add(row);
-
-            }
-            reader.Close();
-            connection.Close();
-            dataGridView1.DataSource = table;
 
         }
 
@@ -174,26 +136,25 @@ namespace WindowsFormsApp1
 
         private void deletebtn_Click(object sender, EventArgs e)
         {
-            SqlConnection connection = new SqlConnection("Data Source=DESKTOP-R2SLAOP\\SQLEXPRESS;Initial Catalog=Cinema_ticket_booking_system;Integrated Security=True;");
+            SqlConnection connection = new SqlConnection(connectionString);
             connection.Open();
-            string deletestr1 = @"delete  movies where Mov_name=@name";
-            string deletestr2 = @"delete movies where Mov_year = @year";
-            SqlCommand command1 = new SqlCommand(deletestr1, connection);
-            SqlCommand command2 = new SqlCommand(deletestr2, connection);
-            SqlParameter mov_name = new SqlParameter("@name", textBox1.Text);
-            SqlParameter mov_year = new SqlParameter("@year", textBox1.Text);
-            if (movies_delete_combobox.Items.Contains("Mov_name"))
-            {
-                command1.Parameters.Add(mov_name);
-                command1.ExecuteNonQuery();
+            // Extract movie ID from the selected item
+            string selectedMovie = movies_delete_combobox.SelectedItem.ToString();
+            int movieId = int.Parse(selectedMovie.Split('-')[0].Trim());
+            // Use the movie ID in your SQL command
+            string deletestr = @"delete  Movies where Movie_id=@Movie_id";
 
-            }
-            else if (movies_delete_combobox.Items.Contains("Mov_year"))
-            {
-                command2.Parameters.Add(mov_year);
-                command2.ExecuteNonQuery();
-            }
+            SqlCommand command = new SqlCommand(deletestr, connection);
+            SqlParameter mov_id = new SqlParameter("@Movie_id", movieId);
+
+            command.Parameters.Add(mov_id);
+            command.ExecuteNonQuery();
+
+            
+
             MessageBox.Show("success delete");
+            populate_combobox();
+
         }
 
         private void textBox5_TextChanged(object sender, EventArgs e)
@@ -203,124 +164,58 @@ namespace WindowsFormsApp1
 
         private void update_Click(object sender, EventArgs e)
         {
-
-            SqlConnection connection = new SqlConnection("Data Source=DESKTOP-R2SLAOP\\SQLEXPRESS;Initial Catalog=Cinema_ticket_booking_system;Integrated Security=True");
-            connection.Open();
-
-
-            SqlParameter Mov_id = new SqlParameter("@Movie_id", textBox1.Text);
-            SqlParameter Mov_name = new SqlParameter("@Mov_name", textBox1.Text);
-            SqlParameter Mov_rating = new SqlParameter("@Mov_rating", maskedTextBox2.Text);
-            SqlParameter Mov_duration = new SqlParameter("Mov_duration", maskedTextBox3.Text);
-            SqlParameter Mov_category = new SqlParameter("Mov_category", textBox3.Text);
-            SqlParameter Mov_year = new SqlParameter("Mov_year", maskedTextBox4.Text);
-            SqlParameter Mov_language = new SqlParameter("Mov_language", textBox4.Text);
-            SqlParameter Mov_minAge = new SqlParameter("Mov_minAge", maskedTextBox5.Text);
-            SqlParameter Mov_cast = new SqlParameter("Mov_cast", richTextBox1.Text);
-
-            if (comboBox3.Items.Contains("name"))
+            if (update_movie_combobox.SelectedItem == null || string.IsNullOrEmpty(update_attr_combobox.Text))
             {
-                string updatestr = @"update Movies
-                                    set 
-                                    Mov_name=@Mov_name
-                                    where Movie_id=@Movie_id ;";
-                SqlCommand command = new SqlCommand(updatestr, connection);
-                command.CommandType = CommandType.Text;
-                command.Parameters.Add(Mov_id);
-                command.Parameters.Add(Mov_name);
-                command.ExecuteNonQuery();
+                MessageBox.Show("Please select a movie and attribute to update.");
+                return;
             }
-            else if (comboBox3.Items.Contains("rating"))
+
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
             {
-                string updatestr2 = @"update Movies
-                                    set 
-                                    Mov_rating=@Mov_rating
-                                    where Movie_id=@Movie_id ;";
-                SqlCommand command = new SqlCommand(updatestr2, connection);
-                command.CommandType = CommandType.Text;
-                command.Parameters.Add(Mov_id);
+                connection.Open();
 
-                command.Parameters.Add(Mov_rating);
+                // Extract movie ID from the selected item
+                string selectedMovie = update_movie_combobox.SelectedItem.ToString();
+                int movieId = int.Parse(selectedMovie.Split('-')[0].Trim());
 
-                command.ExecuteNonQuery();
-            }
-            else if (comboBox3.Items.Contains("duration"))
-            {
-                string updatestr = @"update Movies
-                                    set 
-                                    Mov_duration=@Mov_duration
-                                    where Movie_id=@Movie_id;";
-                SqlCommand command = new SqlCommand(updatestr, connection);
-                command.CommandType = CommandType.Text;
-                command.Parameters.Add(Mov_id);
+                string attributeName = update_attr_combobox.Text.Trim();
+                string newValue = update_textbox.Text.Trim();
 
-                command.Parameters.Add(Mov_duration);
-
-                command.ExecuteNonQuery();
-            }
-            else if (comboBox3.Items.Contains("category"))
-            {
-                string updatestr = @"update Movies
-                                    set 
-                                    Mov_category=@Mov_category
-                                    where Movie_id=@Movie_id;";
-                SqlCommand command = new SqlCommand(updatestr, connection);
-                command.CommandType = CommandType.Text;
-                command.Parameters.Add(Mov_id);
-
-                command.Parameters.Add(Mov_category);
-
-                command.ExecuteNonQuery();
-            }
-            else if (comboBox3.Items.Contains("year"))
-            {
-
-                string updatestr = @"update Movies
-                                    set 
-                                    Mov_year=@Mov_year
-                                    where Movie_id=@Movie_id;";
-                SqlCommand command = new SqlCommand(updatestr, connection);
-                command.CommandType = CommandType.Text;
-                command.Parameters.Add(Mov_id);
-
-                command.Parameters.Add(Mov_year);
-
-                command.ExecuteNonQuery();
-            }
-            else if (comboBox3.Items.Contains("language"))
-            {
-
-                string updatestr = @"update Movies
-                                    set 
-                                    Mov_language=@Mov_language
-                                    where Movie_id=@Movie_id;";
-                SqlCommand command = new SqlCommand(updatestr, connection);
-                command.CommandType = CommandType.Text;
-                command.Parameters.Add(Mov_id);
-
-                command.Parameters.Add(Mov_language);
-
-                command.ExecuteNonQuery();
-            }
-            else if (comboBox3.Items.Contains("min_age"))
-            {
-
-                string updatestr = @"update Movies
-                                    set
-                                    Mov_min_age=@Mov_min_age
-                                    where Movie_id=@Movie_id;";
+                // Build the dynamic SQL with proper escaping for column names
+                string updatestr = $"UPDATE Movies SET [{attributeName}] = @Value WHERE Movie_id = @MovieId";
 
                 SqlCommand command = new SqlCommand(updatestr, connection);
-                command.CommandType = CommandType.Text;
-                command.Parameters.Add(Mov_id);
-                command.Parameters.Add(Mov_minAge);
+                command.Parameters.AddWithValue("@Value", newValue);
+                command.Parameters.AddWithValue("@MovieId", movieId);
 
+                int rowsAffected = command.ExecuteNonQuery();
 
-                command.ExecuteNonQuery();
+                if (rowsAffected > 0)
+                {
+                    MessageBox.Show("Successfully updated movie information!");
+                }
+                else
+                {
+                    MessageBox.Show("No records were updated. Please check your selections.");
+                }
+
+                populate_combobox();
+                update_textbox.Clear();
+                update_movie_combobox.SelectedIndex = -1;
+                update_attr_combobox.SelectedIndex = -1;
             }
-            connection.Close();
-            MessageBox.Show("succses update ");
-
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error updating movie: {ex.Message}");
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
+            }
         }
 
         private void mov_id_TextChanged(object sender, EventArgs e)
@@ -357,41 +252,78 @@ namespace WindowsFormsApp1
         {
 
         }
+
+        private void tableLayoutPanel13_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void label20_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.WindowState = FormWindowState.Maximized;
+            SqlConnection connection = new SqlConnection(connectionString);
+            connection.Open();
+            string showmoviesStr = @"select * from Movies";
+            SqlCommand command = new SqlCommand(showmoviesStr, connection);
+            command.CommandType = CommandType.Text;
+            SqlDataReader reader = command.ExecuteReader();
+            DataTable table = new DataTable();
+            table.Columns.Add("Movie_id");
+            table.Columns.Add("Mov_name");
+            table.Columns.Add("Mov_rating");
+            table.Columns.Add("Mov_duration");
+            table.Columns.Add("Mov_category");
+            table.Columns.Add("Mov_language");
+            table.Columns.Add("Mov_minAge");
+            table.Columns.Add("Mov_year");
+            table.Columns.Add("Mov_cast_members");
+            table.Columns.Add("Mov_cast_roles");
+            DataRow row;
+            while (reader.Read())
+            {
+                row = table.NewRow();
+                row["Movie_id"] = reader["Movie_id"];
+                row["Mov_name"] = reader["Mov_name"];
+                row["Mov_rating"] = reader["Mov_rating"];
+                row["Mov_duration"] = reader["Mov_duration"];
+                row["Mov_category"] = reader["Mov_category"];
+                row["Mov_language"] = reader["Mov_language"];
+                row["Mov_minAge"] = reader["Mov_minAge"];
+                row["Mov_year"] = reader["Mov_year"];
+                row["Mov_cast_members"] = reader["Mov_cast_members"];
+                row["Mov_cast_roles"] = reader["Mov_cast_roles"];
+                table.Rows.Add(row);
+
+            }
+            reader.Close();
+            connection.Close();
+            dataGridView1.DataSource = table;
+        }
+
+        void populate_combobox()
+        {
+            movies_delete_combobox.Items.Clear();
+            update_movie_combobox.Items.Clear();
+            SqlConnection connection = new SqlConnection(connectionString);
+            connection.Open();
+            string showmoviesStr = @"select * from Movies";
+            SqlCommand command = new SqlCommand(showmoviesStr, connection);
+            command.CommandType = CommandType.Text;
+            SqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                string display = $"{reader["Movie_id"]} - {reader["Mov_name"]}";
+                movies_delete_combobox.Items.Add(display);
+                update_movie_combobox.Items.Add(display);
+            }
+            reader.Close();
+            connection.Close();
+
+        }
     }
 }
-//show movies
-//private void button5_Click(object sender, EventArgs e)
-//{
-
-////}
-
-//private void button6_Click(object sender, EventArgs e)
-//{
-//    SqlConnection connection = new SqlConnection("Data Source=DESKTOP-R2SLAOP\\SQLEXPRESS;Initial Catalog=Cinema_ticket_booking_system;Integrated Security=True;");
-//    connection.Open();
-//    string showCustomersstr = @"select * from Customer";
-//    SqlCommand command = new SqlCommand(showCustomersstr, connection);
-//    command.CommandType = CommandType.Text;
-//    SqlDataReader reader = command.ExecuteReader();
-//    DataTable table = new DataTable();
-//    table.Columns.Add("Customer_id");
-//    table.Columns.Add("Customer_email");
-//    table.Columns.Add("Customer_phoneNum");
-//    table.Columns.Add("Customer_age");
-//    table.Columns.Add("Customer_fullName");
-//    DataRow row;
-//    while (reader.Read())
-//    {
-//        row = table.NewRow();
-//        row["ID"] = reader["Customer_id"];
-//        row["EMAIL"] = reader["Customer_email"];
-//        row["PHONENUM"] = reader["Customer_phoneNum"];
-//        row["AGE"] = reader["Customer_age"];
-//        row["FULLNAME"] = reader["Customer_fullName"];
-
-//        table.Rows.Add(row);
-
-//    }
-//    reader.Close();
-//    connection.Close();
-//    dataGridView2.DataSource = table;

@@ -8,7 +8,7 @@ namespace WindowsFormsApp1
     public partial class customers : Form
     {
         // Connection string for database
-        private string connectionString = "Data Source=DESKTOP-JDD3HCC\\MSSQLSERVER01;Initial Catalog=cinema_DB;Integrated Security=True;";
+        private string connectionString = "Data Source=DESKTOP-JDD3HCC\\MSSQLSERVER01;Initial Catalog=CinemaDB;Integrated Security=True;";
 
         public customers()
         {
@@ -321,7 +321,9 @@ namespace WindowsFormsApp1
 
         private void backButton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            dashboard d = new dashboard();
+            d.Show();
+            this.Hide();
         }
     }
 }

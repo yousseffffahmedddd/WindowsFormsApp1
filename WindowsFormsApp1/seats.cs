@@ -7,12 +7,12 @@ namespace WindowsFormsApp1
 {
     public partial class seats : Form
     {
-        // Connection string for database
-        private string connectionString = "Data Sources=DESKTOP-R2SLAOP\\SQLEXPRESS;Initial Catalog=Cinema_ticket_booking_system;Integrated Security=True";
+        private string connectionString = "Data Source=DESKTOP-JDD3HCC\\MSSQLSERVER01;Initial Catalog=CinemaDB;Integrated Security=True;";
 
         public seats()
         {
             InitializeComponent();
+
         }
 
         private void SeatForm_Load(object sender, EventArgs e)
@@ -25,6 +25,8 @@ namespace WindowsFormsApp1
 
             // Load hall IDs into comboboxes
             PopulateHallComboBoxes();
+            populateHallCombo();
+
         }
 
         private void LoadSeatsData()
@@ -34,19 +36,37 @@ namespace WindowsFormsApp1
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string query = "SELECT hall_ID, place FROM Seats";
+                    string query = @"SELECT s.Hall_id, s.Seat_place, 
+                                      CASE 
+                                        WHEN ts.Ticket_id IS NULL THEN 'Available' 
+                                        ELSE 'Occupied' 
+                                      END AS Status,
+                                      h.Hall_cap as Hall_Capacity
+                                      FROM Seat s
+                                      INNER JOIN Hall h ON s.Hall_id = h.Hall_id
+                                      LEFT JOIN (
+                                        SELECT ts.* FROM TicketSeat ts
+                                        JOIN Ticket t ON ts.Ticket_id = t.Ticket_id
+                                        WHERE t.Show_date >= CAST(GETDATE() AS DATE)
+                                      ) ts ON s.Seat_place = ts.Seat_place AND s.Hall_id = ts.Hall_id
+                                      ORDER BY s.Hall_id, s.Seat_place";
+
                     SqlCommand command = new SqlCommand(query, connection);
                     SqlDataReader reader = command.ExecuteReader();
 
                     DataTable table = new DataTable();
                     table.Columns.Add("Hall ID");
-                    table.Columns.Add("Place");
+                    table.Columns.Add("Seat Number");
+                    table.Columns.Add("Status");
+                    table.Columns.Add("Hall Capacity");
 
                     while (reader.Read())
                     {
                         DataRow row = table.NewRow();
-                        row["Hall ID"] = reader["hall_ID"];
-                        row["Place"] = reader["place"];
+                        row["Hall ID"] = reader["Hall_id"];
+                        row["Seat Number"] = reader["Seat_place"];
+                        row["Status"] = reader["Status"];
+                        row["Hall Capacity"] = reader["Hall_Capacity"];
                         table.Rows.Add(row);
                     }
 
@@ -56,7 +76,7 @@ namespace WindowsFormsApp1
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error loading data: " + ex.Message);
+                MessageBox.Show("Error loading seat data: " + ex.Message);
             }
         }
 
@@ -67,23 +87,24 @@ namespace WindowsFormsApp1
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string query = "SELECT hall_ID FROM Hall";
+                    string query = "SELECT Hall_id, Hall_cap FROM Hall ORDER BY Hall_id";
                     SqlCommand command = new SqlCommand(query, connection);
                     SqlDataReader reader = command.ExecuteReader();
 
-                    hallIdComboBox.Items.Clear();
                     hallFilterComboBox.Items.Clear();
-                    hallDeleteComboBox.Items.Clear();
+                    hallFilterComboBox.Items.Add("All Halls");
 
                     while (reader.Read())
                     {
-                        string hallId = reader["hall_ID"].ToString();
-                        hallIdComboBox.Items.Add(hallId);
-                        hallFilterComboBox.Items.Add(hallId);
-                        hallDeleteComboBox.Items.Add(hallId);
+                        string hallInfo = $"Hall {reader["Hall_id"]} (Capacity: {reader["Hall_cap"]})";
+                        hallFilterComboBox.Items.Add(hallInfo);
                     }
 
                     reader.Close();
+
+                    // Select "All Halls" by default
+                    if (hallFilterComboBox.Items.Count > 0)
+                        hallFilterComboBox.SelectedIndex = 0;
                 }
             }
             catch (Exception ex)
@@ -92,126 +113,63 @@ namespace WindowsFormsApp1
             }
         }
 
-        private void insertButton_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (hallIdComboBox.SelectedItem == null || string.IsNullOrEmpty(placeTextBox.Text))
-                {
-                    MessageBox.Show("Hall ID and Place fields are required.");
-                    return;
-                }
-
-                string hallId = hallIdComboBox.SelectedItem.ToString();
-
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-                    string insertQuery = @"INSERT INTO Seats (hall_ID, place) 
-                                           VALUES (@hallId, @place)";
-
-                    SqlCommand command = new SqlCommand(insertQuery, connection);
-                    command.CommandType = CommandType.Text;
-
-                    command.Parameters.AddWithValue("@hallId", hallId);
-                    command.Parameters.AddWithValue("@place", placeTextBox.Text);
-
-                    command.ExecuteNonQuery();
-                    connection.Close();
-                }
-
-                MessageBox.Show("Seat added successfully!");
-
-                // Clear fields after insertion
-                hallIdComboBox.SelectedIndex = -1;
-                placeTextBox.Text = "";
-
-                // Refresh data
-                LoadSeatsData();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error inserting seat: " + ex.Message);
-            }
-        }
-
-        private void deleteButton_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (hallDeleteComboBox.SelectedItem == null || string.IsNullOrEmpty(placeDeleteTextBox.Text))
-                {
-                    MessageBox.Show("Please select a hall and enter the seat place to delete.");
-                    return;
-                }
-
-                string hallId = hallDeleteComboBox.SelectedItem.ToString();
-                string place = placeDeleteTextBox.Text;
-
-                // Confirm deletion
-                DialogResult result = MessageBox.Show("Are you sure you want to delete this seat?",
-                                                    "Confirm Deletion",
-                                                    MessageBoxButtons.YesNo,
-                                                    MessageBoxIcon.Warning);
-                if (result == DialogResult.No)
-                    return;
-
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-                    string deleteQuery = "DELETE FROM Seats WHERE hall_ID = @hallId AND place = @place";
-
-                    SqlCommand command = new SqlCommand(deleteQuery, connection);
-                    command.Parameters.AddWithValue("@hallId", hallId);
-                    command.Parameters.AddWithValue("@place", place);
-
-                    command.ExecuteNonQuery();
-                    connection.Close();
-                }
-
-                MessageBox.Show("Seat deleted successfully!");
-
-                // Clear fields after deletion
-                hallDeleteComboBox.SelectedIndex = -1;
-                placeDeleteTextBox.Text = "";
-
-                // Refresh data
-                LoadSeatsData();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error deleting seat: " + ex.Message);
-            }
-        }
-
         private void hallFilterComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (hallFilterComboBox.SelectedItem == null)
                 return;
 
-            string selectedHallId = hallFilterComboBox.SelectedItem.ToString();
-
             try
             {
+                // If "All Halls" is selected, show all seats
+                if (hallFilterComboBox.SelectedIndex == 0)
+                {
+                    LoadSeatsData();
+                    return;
+                }
+
+                // Extract hall ID from selected item (format: "Hall X (Capacity: Y)")
+                string selectedItem = hallFilterComboBox.SelectedItem.ToString();
+                int startIndex = selectedItem.IndexOf("Hall ") + 5;
+                int endIndex = selectedItem.IndexOf(" (");
+                string hallIdStr = selectedItem.Substring(startIndex, endIndex - startIndex);
+                int hallId = int.Parse(hallIdStr);
+
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string query = "SELECT hall_ID, place FROM Seats WHERE hall_ID = @hallId";
+                    string query = @"SELECT s.Hall_id, s.Seat_place, 
+                                      CASE 
+                                        WHEN ts.Ticket_id IS NULL THEN 'Available' 
+                                        ELSE 'Occupied' 
+                                      END AS Status,
+                                      h.Hall_cap as Hall_Capacity
+                                      FROM Seat s
+                                      INNER JOIN Hall h ON s.Hall_id = h.Hall_id
+                                      LEFT JOIN (
+                                        SELECT ts.* FROM TicketSeat ts
+                                        JOIN Ticket t ON ts.Ticket_id = t.Ticket_id
+                                        WHERE t.Show_date >= CAST(GETDATE() AS DATE)
+                                      ) ts ON s.Seat_place = ts.Seat_place AND s.Hall_id = ts.Hall_id
+                                      WHERE s.Hall_id = @hallId
+                                      ORDER BY s.Seat_place";
 
                     SqlCommand command = new SqlCommand(query, connection);
-                    command.Parameters.AddWithValue("@hallId", selectedHallId);
-
+                    command.Parameters.AddWithValue("@hallId", hallId);
                     SqlDataReader reader = command.ExecuteReader();
 
                     DataTable table = new DataTable();
                     table.Columns.Add("Hall ID");
-                    table.Columns.Add("Place");
+                    table.Columns.Add("Seat Number");
+                    table.Columns.Add("Status");
+                    table.Columns.Add("Hall Capacity");
 
                     while (reader.Read())
                     {
                         DataRow row = table.NewRow();
-                        row["Hall ID"] = reader["hall_ID"];
-                        row["Place"] = reader["place"];
+                        row["Hall ID"] = reader["Hall_id"];
+                        row["Seat Number"] = reader["Seat_place"];
+                        row["Status"] = reader["Status"];
+                        row["Hall Capacity"] = reader["Hall_Capacity"];
                         table.Rows.Add(row);
                     }
 
@@ -232,7 +190,294 @@ namespace WindowsFormsApp1
 
         private void backButton_Click(object sender, EventArgs e)
         {
-            this.Close();
+            dashboard d = new dashboard();
+            d.Show();
+            this.Hide();
         }
+
+        private void showOccupiedSeats_CheckedChanged(object sender, EventArgs e)
+        {
+            // Filter for occupied or available seats based on checkbox
+            CheckBox checkbox = (CheckBox)sender;
+
+            try
+            {
+                // Determine if we need to filter by hall as well
+                int? hallId = null;
+                if (hallFilterComboBox.SelectedIndex > 0) // Not "All Halls"
+                {
+                    string selectedItem = hallFilterComboBox.SelectedItem.ToString();
+                    int startIndex = selectedItem.IndexOf("Hall ") + 5;
+                    int endIndex = selectedItem.IndexOf(" (");
+                    string hallIdStr = selectedItem.Substring(startIndex, endIndex - startIndex);
+                    hallId = int.Parse(hallIdStr);
+                }
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string query = @"SELECT s.Hall_id, s.Seat_place, 
+                                      CASE 
+                                        WHEN ts.Ticket_id IS NULL THEN 'Available' 
+                                        ELSE 'Occupied' 
+                                      END AS Status,
+                                      h.Hall_cap as Hall_Capacity
+                                      FROM Seat s
+                                      INNER JOIN Hall h ON s.Hall_id = h.Hall_id
+                                      LEFT JOIN (
+                                        SELECT ts.* FROM TicketSeat ts
+                                        JOIN Ticket t ON ts.Ticket_id = t.Ticket_id
+                                        WHERE t.Show_date >= CAST(GETDATE() AS DATE)
+                                      ) ts ON s.Seat_place = ts.Seat_place AND s.Hall_id = ts.Hall_id
+                                      WHERE 1=1 ";
+
+                    if (checkbox.Checked)
+                        query += " AND ts.Ticket_id IS NOT NULL ";
+
+                    if (hallId.HasValue)
+                        query += " AND s.Hall_id = @hallId ";
+
+                    query += " ORDER BY s.Hall_id, s.Seat_place";
+
+                    SqlCommand command = new SqlCommand(query, connection);
+
+                    if (hallId.HasValue)
+                        command.Parameters.AddWithValue("@hallId", hallId.Value);
+
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    DataTable table = new DataTable();
+                    table.Columns.Add("Hall ID");
+                    table.Columns.Add("Seat Number");
+                    table.Columns.Add("Status");
+                    table.Columns.Add("Hall Capacity");
+
+                    while (reader.Read())
+                    {
+                        DataRow row = table.NewRow();
+                        row["Hall ID"] = reader["Hall_id"];
+                        row["Seat Number"] = reader["Seat_place"];
+                        row["Status"] = reader["Status"];
+                        row["Hall Capacity"] = reader["Hall_Capacity"];
+                        table.Rows.Add(row);
+                    }
+
+                    reader.Close();
+                    dataGridView1.DataSource = table;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error filtering seats: " + ex.Message);
+            }
+        }
+        private void insertButton_Click(object sender, EventArgs e)
+        {
+          
+           
+                if (string.IsNullOrWhiteSpace(hallIdComboBox.Text) || string.IsNullOrWhiteSpace(placeTextBox.Text))
+                {
+                    MessageBox.Show("Please enter both Hall ID and Seat Number");
+                    return;
+                }
+
+                if (!int.TryParse(placeTextBox.Text, out int seatPlace))
+                {
+                    MessageBox.Show("Seat Number must be a valid integer");
+                    return;
+                }
+
+                if (!int.TryParse(hallIdComboBox.Text, out int hallId))
+                {
+                    MessageBox.Show("Hall ID must be a valid integer");
+                    return;
+                }
+
+                try
+                {
+                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    {
+                        connection.Open();
+
+                        // First check if the seat already exists
+                        string checkQuery = "SELECT COUNT(*) FROM Seat WHERE Hall_id = @hallId AND Seat_place = @seatPlace";
+                        SqlCommand checkCommand = new SqlCommand(checkQuery, connection);
+                        checkCommand.Parameters.AddWithValue("@hallId", hallId);
+                        checkCommand.Parameters.AddWithValue("@seatPlace", seatPlace);
+
+                        int existingCount = (int)checkCommand.ExecuteScalar();
+                        if (existingCount > 0)
+                        {
+                            MessageBox.Show("This seat already exists in the specified hall.");
+                            return;
+                        }
+
+                        // Now check if the hall exists and get its capacity
+                        string hallCheckQuery = "SELECT Hall_cap FROM Hall WHERE Hall_id = @hallId";
+                        SqlCommand hallCheckCommand = new SqlCommand(hallCheckQuery, connection);
+                        hallCheckCommand.Parameters.AddWithValue("@hallId", hallId);
+
+                        object hallCapObj = hallCheckCommand.ExecuteScalar();
+                        if (hallCapObj == null)
+                        {
+                            MessageBox.Show("The specified hall does not exist.");
+                            return;
+                        }
+
+                        int hallCapacity = Convert.ToInt32(hallCapObj);
+                        if (seatPlace > hallCapacity)
+                        {
+                            MessageBox.Show($"Seat number exceeds hall capacity ({hallCapacity})");
+                            return;
+                        }
+
+                        // Insert the new seat
+                        string insertQuery = "INSERT INTO Seat (Hall_id, Seat_place) VALUES (@hallId, @seatPlace)";
+                        SqlCommand insertCommand = new SqlCommand(insertQuery, connection);
+                        insertCommand.Parameters.AddWithValue("@hallId", hallId);
+                        insertCommand.Parameters.AddWithValue("@seatPlace", seatPlace);
+
+                        insertCommand.ExecuteNonQuery();
+                        MessageBox.Show("New seat added successfully!");
+
+                        // Refresh the grid
+                        LoadSeatsData();
+
+                        placeTextBox.Clear();   
+                }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error adding seat: " + ex.Message);
+                }
+            
+        }
+
+        private void deleteButton_Click(object sender, EventArgs e)
+        {
+            // Validate input fields
+            if (string.IsNullOrWhiteSpace(hallDeleteComboBox.Text) || string.IsNullOrWhiteSpace(placeDeleteTextBox.Text))
+            {
+                MessageBox.Show("Please enter both Hall ID and Seat Number to delete");
+                return;
+            }
+
+            if (!int.TryParse(hallDeleteComboBox.Text, out int hallId))
+            {
+                MessageBox.Show("Hall ID must be a valid integer");
+                return;
+            }
+
+            if (!int.TryParse(placeDeleteTextBox.Text, out int seatPlace))
+            {
+                MessageBox.Show("Seat Number must be a valid integer");
+                return;
+            }
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    // Check if the seat exists
+                    string checkQuery = "SELECT COUNT(*) FROM Seat WHERE Hall_id = @hallId AND Seat_place = @seatPlace";
+                    SqlCommand checkCommand = new SqlCommand(checkQuery, connection);
+                    checkCommand.Parameters.AddWithValue("@hallId", hallId);
+                    checkCommand.Parameters.AddWithValue("@seatPlace", seatPlace);
+
+                    int seatCount = (int)checkCommand.ExecuteScalar();
+                    if (seatCount == 0)
+                    {
+                        MessageBox.Show($"Seat {seatPlace} in Hall {hallId} does not exist.");
+                        return;
+                    }
+
+                    // Check if the seat is occupied
+                    string statusQuery = @"SELECT COUNT(*) 
+                                         FROM TicketSeat ts 
+                                         JOIN Ticket t ON ts.Ticket_id = t.Ticket_id
+                                         WHERE ts.Hall_id = @hallId 
+                                         AND ts.Seat_place = @seatPlace 
+                                         AND t.Show_date >= CAST(GETDATE() AS DATE)";
+                    SqlCommand statusCommand = new SqlCommand(statusQuery, connection);
+                    statusCommand.Parameters.AddWithValue("@hallId", hallId);
+                    statusCommand.Parameters.AddWithValue("@seatPlace", seatPlace);
+
+                    int occupiedCount = (int)statusCommand.ExecuteScalar();
+                    if (occupiedCount > 0)
+                    {
+                        MessageBox.Show("Cannot delete occupied seats. This seat is currently assigned to a ticket.");
+                        return;
+                    }
+
+                    // Confirm deletion
+                    DialogResult result = MessageBox.Show(
+                        $"Are you sure you want to delete Seat {seatPlace} in Hall {hallId}?",
+                        "Confirm Deletion",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Warning
+                    );
+
+                    if (result == DialogResult.Yes)
+                    {
+                        // Delete the seat
+                        string deleteQuery = "DELETE FROM Seat WHERE Hall_id = @hallId AND Seat_place = @seatPlace";
+                        SqlCommand deleteCommand = new SqlCommand(deleteQuery, connection);
+                        deleteCommand.Parameters.AddWithValue("@hallId", hallId);
+                        deleteCommand.Parameters.AddWithValue("@seatPlace", seatPlace);
+
+                        int rowsAffected = deleteCommand.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            MessageBox.Show("Seat deleted successfully!");
+
+                            // Refresh the grid
+                            LoadSeatsData();
+                            placeDeleteTextBox.Clear();
+                            hallDeleteComboBox.SelectedIndex = -1;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Failed to delete seat. It may no longer exist in the database.");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error deleting seat: " + ex.Message);
+            }
+        }
+        private void populateHallCombo()
+        {
+            // Load halls into combo box
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string query = "SELECT Hall_id FROM Hall ORDER BY Hall_id";
+                    SqlCommand command = new SqlCommand(query, connection);
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        hallIdComboBox.Items.Add(reader["Hall_id"].ToString());
+                        hallDeleteComboBox.Items.Add(reader["Hall_id"].ToString());
+                    }
+
+                    if (hallIdComboBox.Items.Count > 0)
+                        hallIdComboBox.SelectedIndex = 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading halls: " + ex.Message);
+                return;
+            }
+        }
+
     }
 }

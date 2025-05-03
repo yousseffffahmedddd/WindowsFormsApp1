@@ -1,4 +1,6 @@
-﻿namespace WindowsFormsApp1
+﻿using System;
+
+namespace WindowsFormsApp1
 {
     partial class tickets
     {
@@ -30,8 +32,12 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.insertionPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.label5 = new System.Windows.Forms.Label();
+            this.seat_combobox = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
             this.label4 = new System.Windows.Forms.Label();
+            this.show_combobox = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.priceTextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -61,11 +67,8 @@
             this.viewByComboBox = new System.Windows.Forms.ComboBox();
             this.label17 = new System.Windows.Forms.Label();
             this.refreshButton = new System.Windows.Forms.Button();
-            this.show_combobox = new System.Windows.Forms.ComboBox();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.label5 = new System.Windows.Forms.Label();
-            this.seat_combobox = new System.Windows.Forms.ComboBox();
             this.insertionPanel.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.deletePanel.SuspendLayout();
@@ -74,7 +77,6 @@
             this.tableLayoutPanel9.SuspendLayout();
             this.tableLayoutPanel10.SuspendLayout();
             this.viewPanel.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -117,6 +119,44 @@
             this.insertionPanel.Size = new System.Drawing.Size(441, 350);
             this.insertionPanel.TabIndex = 1;
             // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.75159F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 73.24841F));
+            this.tableLayoutPanel1.Controls.Add(this.label5, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.seat_combobox, 1, 0);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(18, 198);
+            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 1;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(405, 54);
+            this.tableLayoutPanel1.TabIndex = 19;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label5.Location = new System.Drawing.Point(3, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(102, 54);
+            this.label5.TabIndex = 4;
+            this.label5.Text = "Seat";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.label5.UseCompatibleTextRendering = true;
+            // 
+            // seat_combobox
+            // 
+            this.seat_combobox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.seat_combobox.FormattingEnabled = true;
+            this.seat_combobox.Location = new System.Drawing.Point(111, 3);
+            this.seat_combobox.Name = "seat_combobox";
+            this.seat_combobox.Size = new System.Drawing.Size(291, 37);
+            this.seat_combobox.TabIndex = 5;
+            this.seat_combobox.SelectedIndexChanged += new System.EventHandler(this.seat_combobox_SelectedIndexChanged);
+            // 
             // tableLayoutPanel3
             // 
             this.tableLayoutPanel3.ColumnCount = 2;
@@ -144,6 +184,15 @@
             this.label4.Text = "Show";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.label4.UseCompatibleTextRendering = true;
+            // 
+            // show_combobox
+            // 
+            this.show_combobox.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.show_combobox.FormattingEnabled = true;
+            this.show_combobox.Location = new System.Drawing.Point(111, 23);
+            this.show_combobox.Name = "show_combobox";
+            this.show_combobox.Size = new System.Drawing.Size(291, 37);
+            this.show_combobox.TabIndex = 5;
             // 
             // tableLayoutPanel2
             // 
@@ -532,53 +581,6 @@
             this.refreshButton.UseVisualStyleBackColor = false;
             this.refreshButton.Click += new System.EventHandler(this.refreshButton_Click);
             // 
-            // show_combobox
-            // 
-            this.show_combobox.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.show_combobox.FormattingEnabled = true;
-            this.show_combobox.Location = new System.Drawing.Point(111, 14);
-            this.show_combobox.Name = "show_combobox";
-            this.show_combobox.Size = new System.Drawing.Size(291, 37);
-            this.show_combobox.TabIndex = 5;
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 26.75159F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 73.24841F));
-            this.tableLayoutPanel1.Controls.Add(this.label5, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.seat_combobox, 1, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(18, 198);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(405, 54);
-            this.tableLayoutPanel1.TabIndex = 19;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label5.Location = new System.Drawing.Point(3, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(102, 54);
-            this.label5.TabIndex = 4;
-            this.label5.Text = "Seat";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label5.UseCompatibleTextRendering = true;
-            // 
-            // seat_combobox
-            // 
-            this.seat_combobox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.seat_combobox.FormattingEnabled = true;
-            this.seat_combobox.Location = new System.Drawing.Point(111, 3);
-            this.seat_combobox.Name = "seat_combobox";
-            this.seat_combobox.Size = new System.Drawing.Size(291, 37);
-            this.seat_combobox.TabIndex = 5;
-            this.seat_combobox.SelectedIndexChanged += new System.EventHandler(this.seat_combobox_SelectedIndexChanged);
-            // 
             // tickets
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -599,6 +601,8 @@
             this.Load += new System.EventHandler(this.TicketForm_Load);
             this.insertionPanel.ResumeLayout(false);
             this.insertionPanel.PerformLayout();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel3.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
@@ -614,12 +618,12 @@
             this.tableLayoutPanel10.PerformLayout();
             this.viewPanel.ResumeLayout(false);
             this.viewPanel.PerformLayout();
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
+
+
 
         #endregion
 
